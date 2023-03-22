@@ -9,13 +9,20 @@ global $app;
 
 // NOTE: Add your app routes here.
 // The callbacks must be implemented in a controller class.
-// The Vanier\Api must be used as namespace prefix. 
+// The Vanier\Api must be used as namespace prefix.
 
 // ROUTE: /
-$app->get('/', [AboutController::class, 'handleAboutApi']); 
+$app->get('/', [AboutController::class, 'handleAboutApi']);
+
+
+
+// Sports Routes
+$app->get('/sports', [SportsController::class, 'getAllSports']);
+
+
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Reporting! Hello there!");    
+    $response->getBody()->write("Reporting! Hello there!");
     return $response;
 });

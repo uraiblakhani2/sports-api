@@ -38,9 +38,6 @@ $app->setBasePath("/sports-api");
 // NOTE: your routes must be managed in the api_routes.php file.
 require_once __DIR__ . '/src/Routes/api_routes.php';
 
-// Films Routes
-$app->get('/sports', [SportsController::class, 'getAllSports']);
-
 
 // This is a middleware that should be disabled/enabled later.
 //$app->add($beforeMiddleware);

@@ -3,6 +3,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\SportsController;
+
 
 // Import the app instance into this file's scope.
 global $app;

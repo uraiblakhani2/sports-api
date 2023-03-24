@@ -23,7 +23,7 @@ class SportsController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new SportsController();
+        $this->sports_model = new SportsModel();
     }
 
 
@@ -32,9 +32,7 @@ class SportsController extends BaseController
     {
 
         $filtes = $request->getQueryParams();
-        $customer_model = new SportsModel();
-
-        $data = $customer_model->getAll($filtes);
+        $data = $this->sports_model->getAll($filtes);
 
         $json_data = json_encode($data);
 

@@ -24,9 +24,7 @@ class SportsModel extends BaseModel
 
 
 
-        $sql = "SELECT * FROM $this->table_name
-
-        where 1 ";
+        $sql = "SELECT * FROM sport";
 
         return $this->run($sql)->fetchAll();
     }

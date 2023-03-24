@@ -4,7 +4,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 SET @old_autocommit=@@autocommit;
 
-USE sports-api_db;
+USE `sports-api`;
 
 --
 -- Dumping data for table actor
@@ -78,6 +78,41 @@ INSERT INTO team VALUES
 (9, 6, 'Sydney Swans', 'Tom Harley', 'Andrew Pridham', 'Sydney Cricket Ground', 'Red and White', 'Puma', 'John Longmire'),
 (10, 7, 'Yomiuri Giants', 'Kazuo Kuriyama', 'Yoshinobu Takahashi', 'Tokyo Dome', 'Orange and Black', 'Mizuno', 'Tatsunori Hara');
 COMMIT;
+
+--
+-- Dumping data for player
+--
+
+SET AUTOCOMMIT=0;
+INSERT INTO player VALUES
+(1, 1, 1, 'LeBron James', 23, 38, 'Male', 80, 250, 10, 'active'),
+(2, 1, 1, 'Anthony Davis', 3, 29, 'Male', 82, 253, 9, 'active'),
+(3, 1, 2, 'Ja Morant', 12, 22, 'Male', 75, 174, 4, 'active'),
+(4, 1, 3, 'Jayson Tatum', 0, 24, 'Male', 80, 210, 5, 'active'),
+(5, 1, 4, 'Pascal Siakam', 43, 28, 'Male', 81, 230, 6, 'active'),
+(6, 3, 5, 'Marcus Rashford', 10, 25, 'Male', 72, 154, 7, 'active')
+
+
+--
+-- Dumping data for player
+--
+
+SET AUTOCOMMIT=0;
+INSERT INTO ranking VALUES
+(1,1,1,5,4),
+(2,2,1,3,6),
+(3,3,1,7,2),
+(4,4,2,8,1),
+(5,5,3,6,4),
+(6,6,4,10,0),
+(7,7,4,5,5),
+(8,8,5,9,1),
+(9,9,6,12,2),
+(10,10,7,7,3);
+COMMIT;
+
+--
+
 
 --
 -- Dumping data for table city

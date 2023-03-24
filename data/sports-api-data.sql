@@ -149,7 +149,6 @@ INSERT INTO match_bet VALUES
 (10, 5, 10, 200, 380);
 COMMIT;
 
-
 --
 -- Dumping data for table customer
 --

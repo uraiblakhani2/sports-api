@@ -4,6 +4,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\SportsController;
+use Vanier\Api\Controllers\TeamController;
 
 
 // Import the app instance into this file's scope.
@@ -22,6 +23,8 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 $app->get('/sports', [SportsController::class, 'getAllSports']);
 
 
+//Team Routes
+$app->get('/teams', [TeamController::class, 'getAllTeams']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

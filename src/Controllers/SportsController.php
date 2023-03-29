@@ -39,20 +39,21 @@ class SportsController extends BaseController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
-    //create 1 or more sport 
+    //create 1 or more sport
     public function sportCreator(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 
-        if(is_array($data)){
+        if (is_array($data)) {
             foreach ($data as $key => $sport) {
 
-                $data=$sports_model->createSport($sport);
+                $data = $this->sports_model->createSport($sport);
 
-                $res_message=['Sport created'];
 
-                $json_data=json_encode($sport);
-        
+                $res_message = ['Sport created'];
+
+                $json_data = json_encode($sport);
+
                 $response->getBody()->write($json_data);
             }
         }
@@ -66,14 +67,14 @@ class SportsController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if(is_array($data)){
+        if (is_array($data)) {
             foreach ($data as $key => $sport) {
 
-                $data=$sports_model->updateSport($sport);
-                $res_message=['Sports updated'];
+                $data = $this->sports_model->updateSport($sport);
+                $res_message = ['Sports updated'];
 
-                $json_data=json_encode($sport);
-        
+                $json_data = json_encode($sport);
+
                 $response->getBody()->write($json_data);
             }
         }
@@ -85,16 +86,16 @@ class SportsController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        $count= count($data);
+        $count = count($data);
 
-        //VALIDATE THE ARRAY CONTAINING THE 
-        for($i=0;$i<$count; $i++ ){
-            $sport_id= $data[$i];
-            echo $sport_id.'-';
+        //VALIDATE THE ARRAY CONTAINING THE
+        for ($i = 0; $i < $count; $i++) {
+            $sport_id = $data[$i];
+            echo $sport_id . '-';
             $this->sports_model->DeleteSportById($sport_id);
         }
-        $res_message=['Sport deleted'];
+        $res_message = ['Sport deleted'];
 
-        return $this->FunctionReturn($response, $data);
+        //return $this->FunctionReturn($response, $data);
     }
 }

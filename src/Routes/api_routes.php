@@ -29,19 +29,20 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
 $app->post('/sports', [SportsController::class, 'sportCreator']);
-$app->delete('/sports', [SportsController::class, 'sportDelete']);
 $app->put('/sports', [SportsController::class, 'sportUpdate']);
 
 //Team Routes
 $app->get('/teams', [TeamController::class, 'getAllTeams']);
 
 
-//Rankings Routes 
+//Rankings Routes
 $app->get('/rankings', [RankingController::class, 'getAllRankings']);
 
 
 //player Routes
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
+$app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
+
 
 
 //Match Routes

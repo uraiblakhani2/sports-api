@@ -5,7 +5,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Vanier\Api\Models\SportsModel;
+use Vanier\Api\Models\SportModel;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
 
@@ -21,7 +21,7 @@ class SportsController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new SportsModel();
+        $this->sports_model = new SportModel();
     }
 
 
@@ -39,4 +39,62 @@ class SportsController extends BaseController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
+    //create 1 or more sport 
+    public function sportCreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if(is_array($data)){
+            foreach ($data as $key => $sport) {
+
+                $data=$sports_model->createSport($sport);
+
+                $res_message=['Sport created'];
+
+                $json_data=json_encode($sport);
+        
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
+    // cjkkdahd
+
+    //update sport
+    public function sportUpdate(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if(is_array($data)){
+            foreach ($data as $key => $sport) {
+
+                $data=$sports_model->updateSport($sport);
+                $res_message=['Sports updated'];
+
+                $json_data=json_encode($sport);
+        
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
+    //delete sport
+    public function sportDelete(Response $response, Request $request)
+    {
+        $data = $request->getParsedBody();
+
+        $count= count($data);
+
+        //VALIDATE THE ARRAY CONTAINING THE 
+        for($i=0;$i<$count; $i++ ){
+            $sport_id= $data[$i];
+            echo $sport_id.'-';
+            $this->sports_model->DeleteSportById($sport_id);
+        }
+        $res_message=['Sport deleted'];
+
+        return $this->FunctionReturn($response, $data);
+    }
 }

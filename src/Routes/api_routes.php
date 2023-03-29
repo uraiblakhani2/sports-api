@@ -28,7 +28,9 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
-
+$app->post('/sports', [SportsController::class, 'sportCreator']);
+$app->delete('/sports', [SportsController::class, 'sportDelete']);
+$app->put('/sports', [SportsController::class, 'sportUpdate']);
 
 //Team Routes
 $app->get('/teams', [TeamController::class, 'getAllTeams']);
@@ -43,10 +45,12 @@ $app->get('/players', [PlayerController::class, 'getAllPlayers']);
 
 
 //Match Routes
+// TODO: test this routes
 $app->get('/matches', [MatchController::class, 'getAllMatchs']);
 
 
 //Match_bet Routes
+//TODO: test this routes
 $app->get('/match_bets', [MatchController::class, 'getAllMatch_bets']);
 
 

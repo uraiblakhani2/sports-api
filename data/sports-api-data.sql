@@ -25,8 +25,8 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `convertor`
---
-
+--/*
+/*
 CREATE TABLE `convertor` (
   `convertor_id int` int(11) NOT NULL,
   `country_id` varchar(50) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `convertor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
+*/
 --
 -- Table structure for table `country`
 --

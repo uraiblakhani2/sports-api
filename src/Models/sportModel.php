@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Models;
 
-class sportsModel extends BaseModel
+class SportModel extends BaseModel
 {
 
 
@@ -24,6 +24,33 @@ class sportsModel extends BaseModel
         $sql = "SELECT * FROM sport";
 
         return $this->run($sql)->fetchAll();
+    }
+
+    //CREATING A NEW SPORT 
+    public function createSport(array $sport)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $sport);
+    }
+
+
+    public function updateSport(array $film)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->update($this->table_name, $film, ["film_id"=>2]);
+    }
+
+    public function getSportById(int $film_id)
+    {
+        $sql = "SELECT * FROM sport WHERE sport_id =:sport_id ";
+        return $this->run($sql,[":film_id" =>$film_id])->fetchAll();
+    }
+
+    public function DeleteSportById(int $film_id)
+    {
+        $sql = " DELETE FROM $this->table_name WHERE film_id =:film_id ";
+        $smt= $this->run($sql,[":film_id" =>$film_id])->fetchAll();
+        return $smt->rowCount();
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Models;
 
-class SportsModel extends BaseModel
+class TeamModel extends BaseModel
 {
 
 
@@ -14,7 +14,7 @@ class SportsModel extends BaseModel
         parent::__construct();
     }
 
-    //Route: POST /actors
+    //Route: POST /team
     
     public function getAll(array $filters = [])
     {

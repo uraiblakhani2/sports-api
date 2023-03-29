@@ -9,8 +9,6 @@ use Vanier\Api\Models\SportsModel;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
 
-
-
 class SportsController extends BaseController
 {
 

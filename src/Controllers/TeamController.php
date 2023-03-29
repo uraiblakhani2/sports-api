@@ -7,9 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
-use Vanier\Api\Controllers\TeamModel;
-
-
+use Vanier\Api\Models\TeamModel;
 
 class TeamController extends BaseController
 {

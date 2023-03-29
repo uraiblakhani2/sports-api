@@ -34,23 +34,15 @@ class SportModel extends BaseModel
     }
 
 
-    public function updateSport(array $film)
+    public function updateSport(array $sport)
     {
         //pick some of the contained elements and use them in the insert statement
-        $this->update($this->table_name, $film, ["film_id"=>2]);
+        $this->update($this->table_name, $sport, ["film_id"=>2]);
     }
 
-    public function getSportById(int $film_id)
+    public function getSportById(int $sport_id)
     {
         $sql = "SELECT * FROM sport WHERE sport_id =:sport_id ";
-        return $this->run($sql,[":film_id" =>$film_id])->fetchAll();
+        return $this->run($sql,[":film_id" =>$sport_id])->fetchAll();
     }
-
-    public function DeleteSportById(int $film_id)
-    {
-        $sql = " DELETE FROM $this->table_name WHERE film_id =:film_id ";
-        $smt= $this->run($sql,[":film_id" =>$film_id])->fetchAll();
-        return $smt->rowCount();
-    }
-
 }

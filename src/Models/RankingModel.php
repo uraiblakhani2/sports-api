@@ -26,4 +26,16 @@ class RankingModel extends BaseModel
         return $this->run($sql)->fetchAll();
     }
 
+    // public function getLeaguebyId(int $sport_id)
+    // {
+    //     $sql = " SELECT * FROM league WHERE film_id =:film_id ";
+    //     $smt= $this->run($sql,[":film_id" =>$sport_id])->fetchAll();
+    //     return $smt->rowCount();
+    // }
+
+    // public function DeleteRankingByLeague(Type $var = null)
+    // {
+    //     # code...
+    // }
+
 }

@@ -29,7 +29,6 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
 $app->post('/sports', [SportsController::class, 'sportCreator']);
-$app->delete('/sports', [SportsController::class, 'sportDelete']);
 $app->put('/sports', [SportsController::class, 'sportUpdate']);
 
 //Team Routes
@@ -38,6 +37,7 @@ $app->get('/teams', [TeamController::class, 'getAllTeams']);
 
 //Rankings Routes 
 $app->get('/rankings', [RankingController::class, 'getAllRankings']);
+$app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 
 
 //player Routes

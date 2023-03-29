@@ -26,16 +26,17 @@ class RankingModel extends BaseModel
         return $this->run($sql)->fetchAll();
     }
 
-    // public function getLeaguebyId(int $sport_id)
-    // {
-    //     $sql = " SELECT * FROM league WHERE film_id =:film_id ";
-    //     $smt= $this->run($sql,[":film_id" =>$sport_id])->fetchAll();
-    //     return $smt->rowCount();
-    // }
+    public function getLeaguebyRankings(int $league_id)
+    {
+        $sql = " SELECT * FROM league JOIN ranking WHERE league.league_id=: ranking.league_id ";
+        $smt= $this->run($sql,[":league_id" =>$league_id])->fetchAll();
+        return $smt->rowCount();
+    }
 
-    // public function DeleteRankingByLeague(Type $var = null)
-    // {
-    //     # code...
-    // }
+    public function DeleteRankingByLeague(int $ranking_id)
+    {
+        $sql = " DELETE FROM $this->table_name WHERE ranking_id = :ranking_id";
+        $smt = $this->run($sql, [":ranking_id" => $ranking_id])->fetchAll();
+    }
 
 }

@@ -37,5 +37,22 @@ class RankingController extends BaseModel
 
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
+
+
+    public function rankingDelete(Request $request, Response $response, array $uri_args)
+    {
+        $ranking_model = new RankingModel();
+        $ranking_id = $uri_args['ranking_id'];
+
+
+
+        $ranking_model->getLeaguebyRankings($ranking_id);
+
+        $res_message = ['Data has been deleted sucessfully!'];
+        $json_data = json_encode($res_message);
+        $response->getBody()->write($json_data);
+
+        return $response->withStatus(200)->withHeader("Content-Type", "application/json");
+    }
 }
 ?>

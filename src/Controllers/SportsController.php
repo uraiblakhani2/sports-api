@@ -2,12 +2,11 @@
 
 namespace Vanier\Api\Controllers;
 
-
+use Vanier\Api\Models\sportModel;
+use Slim\Exception\HttpNotFoundException;
+use Vanier\Api\Controllers\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Vanier\Api\Models\SportModel;
-use Vanier\Api\Controllers\BaseController;
-use Slim\Exception\HttpNotFoundException;
 
 class SportsController extends BaseController
 {
@@ -21,7 +20,7 @@ class SportsController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new SportModel();
+        $this->sports_model = new sportModel();
     }
 
 
@@ -30,8 +29,27 @@ class SportsController extends BaseController
     {
 
         $filtes = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filtes);
+        $sports_model = new sportModel();
 
+        if(isset($filtes['name'])){
+            $sports=$filtes["name"];
+            $data = $this->sports_model->getAll($sports);
+            $json_data = json_encode($data);
+            $response->getBody()->write($json_data);
+        
+            return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        }else if(isset($filtes['type'])){
+            $sports=$filtes["type"];
+            $data = $this->sports_model->getAll($sports);
+            $json_data = json_encode($data);
+            $response->getBody()->write($json_data);
+        
+            return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        }else{
+
+            $data = $sports_model->getAll($filtes);
+        }
+        
         $json_data = json_encode($data);
 
         $response->getBody()->write($json_data);

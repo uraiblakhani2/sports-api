@@ -1,9 +1,7 @@
 <?php
 
-use Monolog\Handler\CouchDBHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\CountryController;
 use Vanier\Api\Controllers\leagueController;
@@ -12,7 +10,6 @@ use Vanier\Api\Controllers\PlayerController;
 use Vanier\Api\Controllers\RankingController;
 use Vanier\Api\Controllers\SportsController;
 use Vanier\Api\Controllers\TeamController;
-use Vanier\Api\Models\Match_betModel;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -35,13 +32,15 @@ $app->put('/sports', [SportsController::class, 'sportUpdate']);
 $app->get('/teams', [TeamController::class, 'getAllTeams']);
 
 
-//Rankings Routes 
+//Rankings Routes
 $app->get('/rankings', [RankingController::class, 'getAllRankings']);
 $app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 
 
 //player Routes
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
+$app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
+
 
 
 //Match Routes

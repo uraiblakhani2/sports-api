@@ -37,4 +37,21 @@ class PlayerController extends BaseController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
+
+    public function playerDelete(Request $request, Response $response, array $uri_args)
+    {
+        $player_model = new PlayerModel();
+        $player_id = $uri_args['player_id'];
+
+
+
+        $player_model->deletePlayerByID($player_id);
+
+        $res_message = ['Data has been deleted sucessfully!'];
+        $json_data = json_encode($res_message);
+        $response->getBody()->write($json_data);
+
+        return $response->withStatus(200)->withHeader("Content-Type", "application/json");
+    }
+
 }

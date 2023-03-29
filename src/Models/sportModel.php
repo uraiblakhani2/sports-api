@@ -26,7 +26,7 @@ class SportModel extends BaseModel
         return $this->run($sql)->fetchAll();
     }
 
-    //CREATING A NEW SPORT 
+    //CREATING A NEW SPORT
     public function createSport(array $sport)
     {
         //pick some of the contained elements and use them in the insert statement
@@ -46,3 +46,6 @@ class SportModel extends BaseModel
         return $this->run($sql,[":film_id" =>$sport_id])->fetchAll();
     }
 }
+
+
+?>

@@ -82,20 +82,10 @@ class SportsController extends BaseController
     }
 
     //delete sport
-    public function sportDelete(Response $response, Request $request)
-    {
-        $data = $request->getParsedBody();
 
-        $count = count($data);
 
-        //VALIDATE THE ARRAY CONTAINING THE
-        for ($i = 0; $i < $count; $i++) {
-            $sport_id = $data[$i];
-            echo $sport_id . '-';
-            $this->sports_model->DeleteSportById($sport_id);
-        }
-        $res_message = ['Sport deleted'];
 
-        //return $this->FunctionReturn($response, $data);
-    }
+
+
+
 }

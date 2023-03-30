@@ -23,14 +23,14 @@ class SportModel extends BaseModel
 
         $sql = "SELECT * FROM sport WHERE 1";
 
-        if(isset($filters["name"])){
-            $sql .= " AND name like :name";
-            $filters_value[":name"] = $filters["name"] . "%";
+        if(isset($filters["sport_name"])){
+            $sql .= " AND sport_name like :sport_name";
+            $filters_value[":sport_name"] = $filters["sport_name"] . "%";
         }
 
-        if(isset($filters["type"])){
-            $sql .= " AND type like :type";
-            $filters_value[":type"] = $filters["type"] . "%";
+        if(isset($filters["sport_type"])){
+            $sql .= " AND sport_type like :sport_type";
+            $filters_value[":sport_type"] = $filters["sport_type"] . "%";
         }
 
         return $this->run($sql)->fetchAll();

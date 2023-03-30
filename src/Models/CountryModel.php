@@ -25,4 +25,6 @@ class CountryModel extends BaseModel
         return $this->run($sql)->fetchAll();
     }
 
+
+    //get filters for the country name, capital, continent, language, currency
 }

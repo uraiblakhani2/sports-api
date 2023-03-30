@@ -31,15 +31,15 @@ class SportsController extends BaseController
         $filtes = $request->getQueryParams();
         $sports_model = new sportModel();
 
-        if(isset($filtes['name'])){
-            $sports=$filtes["name"];
+        if(isset($filtes['sport_name'])){
+            $sports=$filtes["sport_name"];
             $data = $this->sports_model->getAll($sports);
             $json_data = json_encode($data);
             $response->getBody()->write($json_data);
         
             return $response->withStatus(201)->withHeader("Content-Type", "application/json");
-        }else if(isset($filtes['type'])){
-            $sports=$filtes["type"];
+        }else if(isset($filtes['sport_type'])){
+            $sports=$filtes["sport_type"];
             $data = $this->sports_model->getAll($sports);
             $json_data = json_encode($data);
             $response->getBody()->write($json_data);

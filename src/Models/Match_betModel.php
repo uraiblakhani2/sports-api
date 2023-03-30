@@ -26,4 +26,9 @@ class Match_betModel extends BaseModel
         return $this->run($sql)->fetchAll();
     }
 
+    /*
+    filters to return: 
+        bet_mamount
+        return_amount
+    */
 }

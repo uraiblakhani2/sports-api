@@ -1,6 +1,8 @@
 <?php
 
 namespace Vanier\Api\Models;
+use Vanier\Api\Models\BaseModel;
+
 
 class TeamModel extends BaseModel
 {
@@ -14,11 +16,8 @@ class TeamModel extends BaseModel
         parent::__construct();
     }
 
-    //Route: POST /team
-    
     public function getAll(array $filters = [])
     {
-        //return "not found";
         $filters_value = [];
 
         $sql = "SELECT * FROM team WHERE 1";
@@ -52,16 +51,28 @@ class TeamModel extends BaseModel
             $sql .= " AND team_color like :team_color";
             $filters_value[":team_color"] = $filters["team_color"] . "%";
         }
-        if(isset($filters["team_coach"])){
-            $sql .= " AND team_coach like :team_coach";
-            $filters_value[":team_team_oach"] = $filters["team_coach"] . "%";
+        if(isset($filters["team_sponser"])){
+            $sql .= " AND team_sponser like :team_sponser";
+            $filters_value[":team_sponser"] = $filters["team_sponser"] . "%";
         }
 
-        return $this->run($sql)->fetchAll();
+        if(isset($filters["team_coach"])){
+            $sql .= " AND team_coach like :team_coach";
+            $filters_value[":team_coach"] = $filters["team_coach"] . "%";
+        }
+
+
+        if ((isset($filters['page']) &&  isset($filters['page_size']))) {
+            $this->setPaginationOptions($filters["page"], $filters["page_size"]);
+            return $this->Paginate($sql, $filters_value);
+        }
+
+        return $this->run($sql, $filters_value)->fetchAll();
+
     }
 
     /*
-    filters to return: 
+    filters to return:
         coach
     */
 }

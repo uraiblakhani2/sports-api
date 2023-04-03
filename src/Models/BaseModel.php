@@ -1,7 +1,5 @@
 <?php
-
 namespace Vanier\Api\Models;
-
 use PDO;
 use Exception;
 use Vanier\Api\Helpers\PaginationHelper;
@@ -67,6 +65,41 @@ class BaseModel
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->db->query("SET NAMES utf8mb4");
     }
+
+    protected function paginate(string $sql, array $filters=[], $fetchMode = PDO::FETCH_ASSOC)
+    {
+
+        //-Step 1) Count how many rows there are is in the result set:
+        $number_of_rows = $this->count($sql, $filters);
+
+        //Step 2) We need to compute the offset
+        $paginator = new PaginationHelper($this->current_page, $this->records_per_page, $number_of_rows);
+
+
+         //Step 3) get the offset value from the paginatorHelper
+        $offset= $paginator->getOffset();
+
+        //Step 4) constrain thhe number of rows that must be returned by the querry
+        //add the LIMIT
+        $sql .=" LIMIT $offset,$this->records_per_page";
+
+        //Step 5) include the pagination data in the database
+        $data= $paginator->getPaginationInfo();
+
+        //Step 6) Execute the constrain querry databse
+        $data["data"] = $this->run($sql, $filters)->FetchAll();
+
+        return $data;
+
+
+    }
+
+
+
+
+
+
+
 
     /**
      * get PDO instance
@@ -204,9 +237,7 @@ class BaseModel
      *
      * @param  string $table table name
      * @param  array $data  an array containing the names of the field(s) to be updated along with the new value(s).
-     *                      For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
      * @param  array $where an array containing the filtering operations (it should consist of column names and values)
-     *                      For example, ["user_id"=> 3]
      */
     protected function update($table, $data, $where)
     {
@@ -317,36 +348,6 @@ class BaseModel
 
         return $stmt->rowCount();
     }
-
-
-    protected function paginate(string $sql, array $filters=[], $fetchMode = PDO::FETCH_ASSOC)
-    {
-
-        //-Step 1) Count how many rows there are is in the result set:
-        $number_of_rows = $this->count($sql, $filters);
-
-        //Step 2) We need to compute the offset
-        $paginator = new PaginationHelper($this->current_page, $this->records_per_page, $number_of_rows);
-
-
-         //Step 3) get the offset value from the paginatorHelper
-        $offset= $paginator->getOffset();
-
-        //Step 4) constrain thhe number of rows that must be returned by the querry
-        //add the LIMIT
-        $sql .="LIMIT $offset,$this->records_per_page";
-
-        //Step 5) include the pagination data in the database
-        $data= $paginator->getPaginationInfo();
-
-        //Step 6) Execute the constrain querry databse
-        $data["data"] = $this->run($sql, $filters)->FetchAll();
-
-        return $data;
-
-
-    }
-
 
     public function setPaginationOptions(int $current_page, int $records_per_page): void
     {

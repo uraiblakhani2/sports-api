@@ -29,8 +29,8 @@ class TeamController extends BaseController
     public function getAllTeams(Request $request, Response $response)
     {
 
-        $filtes = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filtes);
+        $filters = $request->getQueryParams();
+        $data = $this->sports_model->getAll($filters);
 
         $json_data = json_encode($data);
 

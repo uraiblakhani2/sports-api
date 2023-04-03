@@ -14,6 +14,7 @@ class PaginationHelper {
      */
     private $current_page;
 
+    
     /**
      * Holds the number of records per page.
      * @var int
@@ -40,7 +41,7 @@ class PaginationHelper {
      * @param int $per_page  the size of the page.
      * @param int $total_count the total number of records in the result set.
      */
-    public function __construct(int $page_number = 1, int $per_page = 10, int $total_count = 0) {
+    public function __construct($page_number = 1, $per_page = 10, $total_count = 0) {
         $this->current_page = $page_number;
         $this->records_per_page = $per_page;
         $this->total_records = $total_count;
@@ -91,10 +92,9 @@ class PaginationHelper {
      */
     public function getPaginationInfo() {
         return Array(
-            "count" => $this->total_records,
-            "offset" => $this->getOffset(),
-            "page" => $this->current_page,
-            "page_size" => $this->records_per_page,
+            "total" => $this->total_records,
+            "current_page" => $this->current_page,
+            "per_page" => $this->records_per_page,
             "last_page" => $this->total_pages,
         );
     }

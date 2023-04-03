@@ -1,7 +1,7 @@
 <?php
 
 namespace Vanier\Api\Models;
-
+use Vanier\Api\Models\BaseModel;
 class SportModel extends BaseModel
 {
 
@@ -13,7 +13,6 @@ class SportModel extends BaseModel
     {
         parent::__construct();
     }
-
     //Route: POST /sports
 
     public function getAll(array $filters = [])

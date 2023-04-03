@@ -20,15 +20,16 @@ class LeagueModel extends BaseModel
         //return "not found";
         $filters_value = [];
 
-        $sql = "SELECT * FROM league";
+        $sql = "SELECT * FROM league WHERE 1";
+
 
         if(isset($filters["start_date"])){
-            $sql .= " AND start_date like :start_date";
+            $sql .= " AND start_date = :start_date";
             $filters_value[":start_date"] = $filters["start_date"] . "%";
         }
 
         if(isset($filters["end_date"])){
-            $sql .= " AND end_date like :end_date";
+            $sql .= " AND end_date = :end_date";
             $filters_value[":end_date"] = $filters["end_date"] . "%";
         }
 
@@ -47,6 +48,11 @@ class LeagueModel extends BaseModel
             $filters_value[":league_name"] = $filters["league_name"] . "%";
         }
 
-        return $this->run($sql)->fetchAll();
+        if ((isset($filters['page']) &&  isset($filters['page_size']))) {
+            $this->setPaginationOptions($filters["page"], $filters["page_size"]);
+            return $this->Paginate($sql, $filters_value);
+        }
+
+        return $this->run($sql, $filters_value)->fetchAll();
     }
 }

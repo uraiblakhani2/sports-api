@@ -11,7 +11,7 @@ class MatchController extends BaseController
 {
 
 
-    private $sports_model = null;
+    private $match_model = null;
     private $validator = null;
 
     /**
@@ -19,7 +19,7 @@ class MatchController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new MatchModel();
+        $this->match_model = new MatchModel();
     }
 
 
@@ -27,7 +27,7 @@ class MatchController extends BaseController
     {
 
         $filtes = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filtes);
+        $data = $this->match_model->getAll($filtes);
 
         $json_data = json_encode($data);
 

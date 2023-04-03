@@ -16,6 +16,9 @@ class SportModel extends BaseModel
 
     //Route: POST /sports
 
+
+
+
     public function getAll(array $filters = [])
     {
         //return "not found";
@@ -33,8 +36,15 @@ class SportModel extends BaseModel
             $filters_value[":sport_type"] = $filters["sport_type"] . "%";
         }
 
-        return $this->run($sql)->fetchAll();
-    }
+        if ((isset($filters['page']) &&  isset($filters['page_size']))) {
+            $this->setPaginationOptions($filters["page"], $filters["page_size"]);
+            return $this->Paginate($sql, $filters_value);
+        }
+
+        return $this->run($sql, $filters_value)->fetchAll();
+
+
+}
 
     //CREATING A NEW SPORT
     public function createSport(array $sport)

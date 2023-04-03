@@ -34,7 +34,7 @@ class BaseModel
      * Instantiates the BaseModel.
      * @global array $db_options    database connection options.
      * @param array $options        Optional array of PDO options
-     * @throws Exception 
+     * @throws Exception
      */
     public function __construct($options = [])
     {
@@ -70,7 +70,7 @@ class BaseModel
 
     /**
      * get PDO instance
-     * 
+     *
      * @return $db PDO instance
      */
     protected function getPdo()
@@ -80,8 +80,8 @@ class BaseModel
 
 
     /**
-     * Run raw sql query 
-     * 
+     * Run raw sql query
+     *
      * @param  string $sql       sql query
      * @return void
      */
@@ -111,7 +111,7 @@ class BaseModel
 
     /**
      * Executes a query and gets an array of matching records.
-     * 
+     *
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that can be added to the query.
      * @param  object $fetchMode set return mode ie object or array
@@ -124,9 +124,9 @@ class BaseModel
 
     /**
      * Finds a record matching the provided filtering options.
-     * Can execute a query that joins two or more tables. 
+     * Can execute a query that joins two or more tables.
      * Should be used to fetch a single record from a table.
-     * 
+     *
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that will be appended to the WHERE clause.
      * @param  object $fetchMode set return mode ie object or array
@@ -139,7 +139,7 @@ class BaseModel
 
     /**
      * Gets a table record by its id.
-     * 
+     *
      * @param  string $table     name of table
      * @param  integer $id       id of record
      * @param  object $fetchMode set return mode ie object or array
@@ -152,9 +152,9 @@ class BaseModel
 
     /**
      * Gets the number of records contained in the obtained result set.
-     * 
+     *
      * @param  string $sql       sql query
-     * @param  array  $args      filtering options. 
+     * @param  array  $args      filtering options.
      * @param  object $fetchMode set return mode ie object or array
      * @return integer           returns number of records
      */
@@ -174,7 +174,7 @@ class BaseModel
 
     /**
      * Inserts a new record into the specified table.
-     * 
+     *
      * @param  string $table the table name where the new data should be inserted.
      * @param  array $data  an associative array of column names (fields) and values.
      *              For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
@@ -201,7 +201,7 @@ class BaseModel
 
     /**
      * updates one or more records contained in the specified table.
-     * 
+     *
      * @param  string $table table name
      * @param  array $data  an array containing the names of the field(s) to be updated along with the new value(s).
      *                      For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
@@ -223,7 +223,7 @@ class BaseModel
         }
         $fieldDetails = rtrim($fieldDetails, ',');
 
-        //setup where 
+        //setup where
         $whereDetails = null;
         $i = 0;
         foreach ($where as $key => $value) {
@@ -238,10 +238,10 @@ class BaseModel
 
     /**
      * Deletes one or more records.
-     * 
+     *
      * @param  string $table table name
-     * @param  array $where an array containing the filtering operation. 
-     * Note that those operations will eb appeNded to the WHERE Clause of the DELETE query. 
+     * @param  array $where an array containing the filtering operation.
+     * Note that those operations will eb appeNded to the WHERE Clause of the DELETE query.
      * @param  integer $limit limit number of records
      */
     protected function delete($table, $where, $limit = 1)
@@ -249,7 +249,7 @@ class BaseModel
         //collect the values from collection
         $values = array_values($where);
 
-        //setup where 
+        //setup where
         $whereDetails = null;
         $i = 0;
         foreach ($where as $key => $value) {
@@ -269,7 +269,7 @@ class BaseModel
 
     /**
      * Delete all records records
-     * 
+     *
      * @param  string $table table name
      */
     protected function deleteAll($table)
@@ -281,7 +281,7 @@ class BaseModel
 
     /**
      * Delete record by id
-     * 
+     *
      * @param  string $table table name
      * @param  integer $id id of record
      */
@@ -294,7 +294,7 @@ class BaseModel
 
     /**
      * Delete record by ids
-     * 
+     *
      * @param  string $table table name
      * @param  string $column name of column
      * @param  string $ids ids of records
@@ -308,7 +308,7 @@ class BaseModel
 
     /**
      * truncate table
-     * 
+     *
      * @param  string $table table name
      */
     protected function truncate($table)
@@ -317,6 +317,36 @@ class BaseModel
 
         return $stmt->rowCount();
     }
+
+
+    protected function paginate(string $sql, array $filters=[], $fetchMode = PDO::FETCH_ASSOC)
+    {
+
+        //-Step 1) Count how many rows there are is in the result set:
+        $number_of_rows = $this->count($sql, $filters);
+
+        //Step 2) We need to compute the offset
+        $paginator = new PaginationHelper($this->current_page, $this->records_per_page, $number_of_rows);
+
+
+         //Step 3) get the offset value from the paginatorHelper
+        $offset= $paginator->getOffset();
+
+        //Step 4) constrain thhe number of rows that must be returned by the querry
+        //add the LIMIT
+        $sql .="LIMIT $offset,$this->records_per_page";
+
+        //Step 5) include the pagination data in the database
+        $data= $paginator->getPaginationInfo();
+
+        //Step 6) Execute the constrain querry databse
+        $data["data"] = $this->run($sql, $filters)->FetchAll();
+
+        return $data;
+
+
+    }
+
 
     public function setPaginationOptions(int $current_page, int $records_per_page): void
     {

@@ -33,26 +33,6 @@ class SportsController extends BaseController
 
         //$validate = $this->validator->validateFilters($filtes);
         $sports_model = new sportModel();
-
-        if(isset($filtes['sport_name'])){
-            $sports=$filtes["sport_name"];
-            $data = $sports_model->getAll($sports);
-            $json_data = json_encode($data);
-            $response->getBody()->write($json_data);
-        
-            return $response->withStatus(201)->withHeader("Content-Type", "application/json");
-        }else if(isset($filtes['sport_type'])){
-            $sports=$filtes["sport_type"];
-            $data = $this->sports_model->getAll($sports);
-            $json_data = json_encode($data);
-            $response->getBody()->write($json_data);
-        
-            return $response->withStatus(201)->withHeader("Content-Type", "application/json");
-        }else{
-
-            $data = $sports_model->getAll($filters);
-        }
-
         $data = $sports_model->getAll($filters);
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);
@@ -80,7 +60,6 @@ class SportsController extends BaseController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
-    // cjkkdahd
 
     //update sport
     public function sportUpdate(Request $request, Response $response)
@@ -100,5 +79,12 @@ class SportsController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
+
+//delete sport
+
+
+
+
+
 
 }

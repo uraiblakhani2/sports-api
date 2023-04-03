@@ -10,7 +10,7 @@ use Vanier\Api\Models\CountryModel;
 class CountryController extends BaseController
 {
 
-    private $sports_model = null;
+    private $country_model = null;
     private $validator = null;
 
     /**
@@ -18,15 +18,15 @@ class CountryController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new CountryModel();
+        $this->country_model = new CountryModel();
     }
 
 
     public function getAllCountries(Request $request, Response $response)
     {
 
-        $filtes = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filtes);
+        $filters = $request->getQueryParams();
+        $data = $this->country_model->getAll($filters);
 
         $json_data = json_encode($data);
 

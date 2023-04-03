@@ -16,9 +16,6 @@ class SportModel extends BaseModel
 
     //Route: POST /sports
 
-
-
-
     public function getAll(array $filters = [])
     {
         //return "not found";
@@ -42,9 +39,7 @@ class SportModel extends BaseModel
         }
 
         return $this->run($sql, $filters_value)->fetchAll();
-
-
-}
+    }
 
     //CREATING A NEW SPORT
     public function createSport(array $sport)

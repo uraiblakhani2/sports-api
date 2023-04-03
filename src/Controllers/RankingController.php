@@ -44,8 +44,6 @@ class RankingController extends BaseModel
         $ranking_model = new RankingModel();
         $ranking_id = $uri_args['ranking_id'];
 
-
-
         $ranking_model->getLeaguebyRankings($ranking_id);
 
         $res_message = ['Data has been deleted sucessfully!'];

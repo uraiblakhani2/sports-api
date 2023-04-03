@@ -1,6 +1,8 @@
 <?php
 
 namespace Vanier\Api\Models;
+use Vanier\Api\Models\BaseModel;
+
 
 class RankingModel extends BaseModel
 {
@@ -15,15 +17,30 @@ class RankingModel extends BaseModel
     }
 
     //Route: POST /actors
-    
+
     public function getAll(array $filters = [])
     {
         //return "not found";
         $filters_value = [];
 
-        $sql = "SELECT * FROM ranking";
+        $sql = "SELECT * FROM ranking WHERE 1";
 
-        return $this->run($sql)->fetchAll();
+        if(isset($filters["games_won"])){
+            $sql .= " AND games_won = :games_won";
+            $filters_value[":games_won"] = $filters["games_won"] . "%";
+        }
+
+        if(isset($filters["games_lost"])){
+            $sql .= " AND games_lost like :games_lost";
+            $filters_value[":games_lost"] = $filters["games_lost"] . "%";
+        }
+
+        if ((isset($filters['page']) &&  isset($filters['page_size']))) {
+            $this->setPaginationOptions($filters["page"], $filters["page_size"]);
+            return $this->Paginate($sql, $filters_value);
+        }
+
+        return $this->run($sql, $filters_value)->fetchAll();
     }
 
     public function getLeaguebyRankings(int $league_id)
@@ -40,7 +57,7 @@ class RankingModel extends BaseModel
     }
 
     /*
-    filters to return: 
+    filters to return:
         games_won
         games_lost
     */

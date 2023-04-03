@@ -27,8 +27,6 @@ class SportsController extends BaseController
 
     public function getAllSports(Request $request, Response $response)
     {
-
-
         $filters = $request->getQueryParams();
 
         //$validate = $this->validator->validateFilters($filtes);
@@ -79,12 +77,5 @@ class SportsController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-
-//delete sport
-
-
-
-
-
 
 }

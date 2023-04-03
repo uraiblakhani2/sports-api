@@ -31,9 +31,11 @@ class SportsController extends BaseController
         $filtes = $request->getQueryParams();
         $sports_model = new sportModel();
 
+        
+
         if(isset($filtes['sport_name'])){
             $sports=$filtes["sport_name"];
-            $data = $this->sports_model->getAll($sports);
+            $data = $sports_model->getAll($sports);
             $json_data = json_encode($data);
             $response->getBody()->write($json_data);
         

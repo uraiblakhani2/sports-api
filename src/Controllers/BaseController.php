@@ -15,4 +15,11 @@ class BaseController
         $response->getBody()->write($json_data);
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
     }
+
+    protected function notFoundResponse(Response $response, $data, $status=400)
+    {
+        $response->getBody()->write($data);
+        return $response->withStatus($status)->withHeader("Content-Type", "application/json");
+    }
+
 }

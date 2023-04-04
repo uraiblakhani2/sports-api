@@ -5,14 +5,15 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
+use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\BaseModel;
 use Vanier\Api\Models\RankingModel;
 
-class RankingController extends BaseModel
+class RankingController extends BaseController
 {
 
 
-    private $sports_model = null;
+    private $ranking_model = null;
     private $validator = null;
 
     /**
@@ -20,7 +21,9 @@ class RankingController extends BaseModel
      */
     public function __construct()
     {
-        $this->sports_model = new RankingModel();
+        $this->ranking_model = new RankingModel();
+        $this->validator = new ValidationHelper();
+        
     }
 
 
@@ -28,14 +31,14 @@ class RankingController extends BaseModel
     public function getAllRankings(Request $request, Response $response)
     {
 
-        $filtes = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filtes);
-
-        $json_data = json_encode($data);
-
-        $response->getBody()->write($json_data);
-
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        $filters = $request->getQueryParams();
+        $validation = $this->validator->validateRankingFilters($filters);
+        if ($validation == "valid") {
+            $data = $this->ranking_model->getAll($filters);
+            return $this->prepareOkResponse($response, $data);
+        } else {
+            return $this->notFoundResponse($response, $validation, 400);
+        }
     }
 
 

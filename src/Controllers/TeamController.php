@@ -7,13 +7,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
+use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\TeamModel;
 
 class TeamController extends BaseController
 {
 
 
-    private $sports_model = null;
+    private $team_model = null;
     private $validator = null;
 
     /**
@@ -21,7 +22,8 @@ class TeamController extends BaseController
      */
     public function __construct()
     {
-        $this->sports_model = new TeamModel();
+        $this->team_model = new TeamModel();
+        $this->validator = new ValidationHelper();
     }
 
 
@@ -30,13 +32,13 @@ class TeamController extends BaseController
     {
 
         $filters = $request->getQueryParams();
-        $data = $this->sports_model->getAll($filters);
-
-        $json_data = json_encode($data);
-
-        $response->getBody()->write($json_data);
-
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        $validation = $this->validator->validateTeamsFilters($filters);
+        if ($validation == "valid") {
+            $data = $this->team_model->getAll($filters);
+            return $this->prepareOkResponse($response, $data);
+        } else {
+            return $this->notFoundResponse($response, $validation, 400);
+        }
     }
 
 }

@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
 
+use Vanier\Api\helpers\ValidationHelper;
+
 class SportsController extends BaseController
 {
 
@@ -23,6 +25,8 @@ class SportsController extends BaseController
     {
         $this->sports_model = new sportModel();
         $this->validator= new Validator();
+        $this->validator = new ValidationHelper();
+
     }
 
 
@@ -34,10 +38,13 @@ class SportsController extends BaseController
 
         //$validate = $this->validator->validateFilters($filtes);
         $sports_model = new sportModel();
-        $data = $sports_model->getAll($filters);
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        $validation = $this->validator->validateSportsFilters($filters);
+        if ($validation == "valid") {
+            $data = $this->sports_model->getAll($filters);
+            return $this->prepareOkResponse($response, $data);
+        } else {
+            return $this->notFoundResponse($response, $validation, 400);
+        }
     }
 
     //create 1 or more sport
@@ -80,5 +87,4 @@ class SportsController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-
 }

@@ -7,6 +7,7 @@ use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Helpers\Validator;
 
 class SportsController extends BaseController
 {
@@ -21,12 +22,14 @@ class SportsController extends BaseController
     public function __construct()
     {
         $this->sports_model = new sportModel();
+        $this->validator= new Validator();
     }
 
 
 
     public function getAllSports(Request $request, Response $response)
     {
+        
         $filters = $request->getQueryParams();
 
         //$validate = $this->validator->validateFilters($filtes);

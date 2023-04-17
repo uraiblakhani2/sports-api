@@ -36,4 +36,26 @@ class leagueController extends BaseController
             return $this->notFoundResponse($response, $validation, 400);
         }
     }
+
+    //create 1 or more league
+    public function leaguecreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $league) {
+
+                $data = $this->league_model->createLeague($league);
+
+
+                $res_message = ['Player created'];
+
+                $json_data = json_encode($league);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+    
 }

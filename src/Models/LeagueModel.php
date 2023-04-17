@@ -55,4 +55,11 @@ class LeagueModel extends BaseModel
 
         return $this->run($sql, $filters_value)->fetchAll();
     }
+
+    //CREATING A NEW League
+    public function createLeague(array $League)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $League);
+    }
 }

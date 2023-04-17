@@ -38,4 +38,26 @@ class MatchController extends BaseController
         }
     }
 
+
+    //create 1 or more match
+    public function matchcreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $match) {
+
+                $data = $this->match_model->createMatch($match);
+
+
+                $res_message = ['Player matchd'];
+
+                $json_data = json_encode($match);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
 }

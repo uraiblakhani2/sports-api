@@ -71,6 +71,13 @@ class TeamModel extends BaseModel
 
     }
 
+    //CREATING A NEW Team
+    public function createTeam(array $Team)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $Team);
+    }
+
     /*
     filters to return:
         coach

@@ -53,11 +53,12 @@ class MatchModel extends BaseModel
 
         return $this->run($sql, $filters_value)->fetchAll();
 
+    }   
+
+    //CREATING A NEW match
+    public function createMatch(array $match)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $match);
     }
-
-
-
-
-
-
 }

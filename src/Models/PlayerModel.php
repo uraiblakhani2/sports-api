@@ -67,11 +67,18 @@ class PlayerModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
 
     }
-
+    
+    //delete a player by ID
     public function deletePlayerByID(int $player_id)
     {
         $sql = " DELETE FROM $this->table_name WHERE player_id = :player_id";
         $smt = $this->run($sql, [":player_id" => $player_id])->fetchAll();
     }
 
+    //CREATING A NEW player
+    public function createPlayer(array $player)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $player);
+    }
 }

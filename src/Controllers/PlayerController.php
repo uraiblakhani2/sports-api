@@ -56,4 +56,27 @@ class PlayerController extends BaseController
         return $response->withStatus(200)->withHeader("Content-Type", "application/json");
     }
 
+
+    //create 1 or more player
+    public function playerCreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $player) {
+
+                $data = $this->player_model->createPlayer($player);
+
+
+                $res_message = ['Player created'];
+
+                $json_data = json_encode($player);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+    
+
 }

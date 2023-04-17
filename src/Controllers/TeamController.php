@@ -41,4 +41,26 @@ class TeamController extends BaseController
         }
     }
 
+
+    //create 1 or more team
+    public function teamCreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $team) {
+
+                $data = $this->team_model->createTeam($team);
+
+
+                $res_message = ['Player created'];
+
+                $json_data = json_encode($team);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+    
 }

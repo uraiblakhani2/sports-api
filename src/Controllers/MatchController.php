@@ -50,7 +50,7 @@ class MatchController extends BaseController
                 $data = $this->match_model->createMatch($match);
 
 
-                $res_message = ['Player matchd'];
+                $res_message = ['match created'];
 
                 $json_data = json_encode($match);
 

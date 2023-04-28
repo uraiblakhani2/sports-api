@@ -31,6 +31,8 @@ $app->put('/sports', [SportsController::class, 'sportUpdate']);
 //Team Routes
 $app->get('/teams', [TeamController::class, 'getAllTeams']);
 $app->post('/teams', [TeamController::class, 'teamCreator']);
+$app->put('/teams', [TeamController::class, 'teamUpdate']);
+
 
 //Rankings Routes
 $app->get('/rankings', [RankingController::class, 'getAllRankings']);
@@ -41,7 +43,7 @@ $app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
 $app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
 $app->post('/players', [PlayerController::class, 'playerCreator']);
-
+$app->put('/players', [PlayerController::class, 'cplayerUpdate']);
 
 //Match Routes
 // TODO: test this routes
@@ -59,7 +61,8 @@ $app->post('/leagues', [leagueController::class, 'leagueCreator']);
 
 //Country Routes
 $app->get('/countries', [CountryController::class, 'getAllCountries']);
-
+$app->post('/countries', [CountryController::class, 'countryCreator']);
+$app->put('/countries', [CountryController::class, 'countryUpdate']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

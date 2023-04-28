@@ -37,4 +37,47 @@ class CountryController extends BaseController
             return $this->notFoundResponse($response, $validation, 400);
         }
     }
+
+
+    //create 1 or more country
+    public function countrycreator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $country) {
+
+                $data = $this->country_model->createCountry($country);
+
+
+                $res_message = ['country created'];
+
+                $json_data = json_encode($country);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
+
+
+    //update sport
+    public function countryUpdate(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $country) {
+
+                $data = $this->country_model->updateCountry($country);
+                $res_message = ['Sports updated'];
+
+                $json_data = json_encode($country);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
 }

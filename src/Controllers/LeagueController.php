@@ -48,7 +48,7 @@ class leagueController extends BaseController
                 $data = $this->league_model->createLeague($league);
 
 
-                $res_message = ['Player created'];
+                $res_message = ['league created'];
 
                 $json_data = json_encode($league);
 

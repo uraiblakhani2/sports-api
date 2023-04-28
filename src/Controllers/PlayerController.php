@@ -79,4 +79,24 @@ class PlayerController extends BaseController
     }
     
 
+
+    //update player
+    public function sportUpdate(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $player) {
+
+                $data = $this->player_model->updatePlayer($player);
+                $res_message = ['player updated'];
+
+                $json_data = json_encode($player);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
 }

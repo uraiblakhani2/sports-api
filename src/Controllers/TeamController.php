@@ -53,7 +53,7 @@ class TeamController extends BaseController
                 $data = $this->team_model->createTeam($team);
 
 
-                $res_message = ['Player created'];
+                $res_message = ['team created'];
 
                 $json_data = json_encode($team);
 
@@ -63,4 +63,23 @@ class TeamController extends BaseController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
     
+
+    //update team
+    public function teampdate(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (is_array($data)) {
+            foreach ($data as $key => $team) {
+
+                $data = $this->team_model->updateTeam($team);
+                $res_message = ['player updated'];
+
+                $json_data = json_encode($team);
+
+                $response->getBody()->write($json_data);
+            }
+        }
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
 }

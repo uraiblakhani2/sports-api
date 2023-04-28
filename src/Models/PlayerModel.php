@@ -81,4 +81,10 @@ class PlayerModel extends BaseModel
         //pick some of the contained elements and use them in the insert statement
         $this->insert($this->table_name, $player);
     }
+
+    public function updatePlayer(array $player)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->update($this->table_name, $player, ["player_id"=>1]);
+    }
 }

@@ -58,4 +58,18 @@ class CountryModel extends BaseModel
 
     }
 
+    //CREATING A NEW country
+    public function createCountry(array $country)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->insert($this->table_name, $country);
+    }
+
+
+    public function updateCountry(array $sport)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->update($this->table_name, $sport, ["country_id"=>1]);
+    }
+
 }

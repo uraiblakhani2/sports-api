@@ -78,6 +78,12 @@ class TeamModel extends BaseModel
         $this->insert($this->table_name, $Team);
     }
 
+    public function updateTeam(array $team)
+    {
+        //pick some of the contained elements and use them in the insert statement
+        $this->update($this->table_name, $team, ["team_id"=>1]);
+    }
+
     /*
     filters to return:
         coach

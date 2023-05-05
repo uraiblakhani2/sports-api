@@ -26,6 +26,7 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
 $app->post('/sports', [SportsController::class, 'sportCreator']);
+
 $app->put('/sports', [SportsController::class, 'sportUpdate']);
 
 //Team Routes

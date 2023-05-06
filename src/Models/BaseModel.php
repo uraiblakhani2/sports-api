@@ -96,11 +96,6 @@ class BaseModel
 
 
 
-
-
-
-
-
     /**
      * get PDO instance
      *

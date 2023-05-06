@@ -4,9 +4,19 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\helpers\AppLoggerHelper;
 
 class BaseController
 {
+    //App logger
+    protected function logMessage(string $message){
+        $app_logger = new AppLoggerHelper();
+        $app_logger->getAppLogger()->info("Hello, from the base controller");
+
+        
+    }
+   
+
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
     {
         // var_dump($data);

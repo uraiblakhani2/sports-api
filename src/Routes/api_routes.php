@@ -1,15 +1,28 @@
 <?php
 
+// use Psr\Http\Message\ResponseInterface as Response;
+// use Psr\Http\Message\ServerRequestInterface as Request;
+// use Vanier\Api\Controllers\AboutController;
+// use Vanier\Api\Controllers\CountryController;
+// use Vanier\Api\Controllers\leagueController;
+// use Vanier\Api\Controllers\MatchController;
+// use Vanier\Api\Controllers\PlayerController;
+// use Vanier\Api\Controllers\RankingController;
+// use Vanier\Api\Controllers\SportsController;
+// use Vanier\Api\Controllers\TeamController;
+
+use Monolog\Logger;
+use Slim\Factory\AppFactory;
+use Monolog\Handler\StreamHandler;
+use Vanier\Api\Controllers\FilmsController;
+use Vanier\Api\Controllers\ActorsController;
+use Vanier\Api\Controllers\CurrencyController;
+use Vanier\Api\controllers\DistanceController;
+use Vanier\Api\Controllers\CustomersController;
+use Vanier\Api\Controllers\CategoriesController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Vanier\Api\Controllers\AboutController;
-use Vanier\Api\Controllers\CountryController;
-use Vanier\Api\Controllers\leagueController;
-use Vanier\Api\Controllers\MatchController;
-use Vanier\Api\Controllers\PlayerController;
-use Vanier\Api\Controllers\RankingController;
-use Vanier\Api\Controllers\SportsController;
-use Vanier\Api\Controllers\TeamController;
+use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -65,8 +78,43 @@ $app->get('/countries', [CountryController::class, 'getAllCountries']);
 $app->post('/countries', [CountryController::class, 'countryCreator']);
 $app->put('/countries', [CountryController::class, 'countryUpdate']);
 
+//currency conventor route
+$app->post('/distance', [CurrencyController::class, 'convert']);
+
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Reporting! Hello there!");
     return $response;
 });
+
+define('APP_LOG_DIR', __DIR__.'/logs/app.log');
+
+$app->get('/logMe', function (Request $request, Response $response, $args) {
+    $logger = new Logger("test-log");
+    $logger_handler = new StreamHandler(APP_LOG_DIR, Logger::DEBUG);
+    $logger->pushHandler($logger_handler);
+    $db_logger = new Logger("database_logs");
+    $db_logger->pushHandler($logger_handler);
+    $db_logger->info("This query failed...");
+    $params = $request->getQueryParams();
+    $logger->info("Access ".$request->getMethod(). ' '.$request->getUri()->getPath(), $params);
+    $response->getBody()->write("Reporting! Logging in process!");
+    return $response;
+});
+
+
+// require_once 'controllers/CurrencyConverterController.php';
+
+// $conventor_id = 1;
+// $controller = new CurrencyConverterController($conventor_id);
+
+// $amount = 100;
+// $fromCurrency = "USD";
+// $toCurrency = "EUR";
+
+// try {
+//     $convertedAmount = $controller->convert($amount, $fromCurrency, $toCurrency);
+//     echo "{$amount} {$fromCurrency} is equal to {$convertedAmount} {$toCurrency}" . PHP_EOL;
+// } catch (Exception $e) {
+//     echo "Error: " . $e->getMessage() . PHP_EOL;
+// }

@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\Controllers\CompositeResourceController;
 
@@ -54,13 +55,26 @@ class leagueController extends BaseController
         $sports_db = new CompositeResourceController();
         $country = new CountryModel();
         $sport = new SportModel();
-        $leagues = $sports_db->fetchLeaguesByCountry($sport_name, $country_name);
 
-        $data["country"] = $country->getCountryByName($country_name);
-        $data["sport"] = $sport->getSportByName($sport_name);
-        $data["Leagues"] = $leagues;
-        $json_data = json_encode($data);
-        return $this->prepareOkResponse($response, $data);
+        $country_info = $country->getCountryByName($country_name);
+        $sport_info = $sport->getSportByName($sport_name);
+
+        if (isset($country_info["country_id"]) && isset($sport_info["sport_id"])  ) {
+            $leagues = $sports_db->fetchLeaguesByCountry($sport_name, $country_name);
+
+            $data["Leagues"] = $leagues;
+            $json_data = json_encode($data);
+            return $this->prepareOkResponse($response, $data);
+
+        }
+
+        else {
+            //throwing http status code 406
+            throw new HttpNotFoundException($request);
+
+        }
+
+
     }
 
     //create 1 or more league

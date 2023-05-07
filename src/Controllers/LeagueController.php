@@ -5,8 +5,13 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
+use Vanier\Api\Controllers\CompositeResourceController;
+
 use Vanier\Api\helpers\ValidationHelper;
+use Vanier\Api\Models\CountryModel;
+
 use Vanier\Api\Models\LeagueModel;
+use Vanier\Api\Models\SportModel;
 
 class leagueController extends BaseController
 {
@@ -37,6 +42,27 @@ class leagueController extends BaseController
         }
     }
 
+
+    public function getAllLeaguesByCountry(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+
+        $sport_name = $uri_args['sport_name'];
+        $country_name = $uri_args['country_name'];
+
+
+        $sports_db = new CompositeResourceController();
+        $country = new CountryModel();
+        $sport = new SportModel();
+        $leagues = $sports_db->fetchLeaguesByCountry($sport_name, $country_name);
+
+        // $data["country"] = $country->getCountryByName($country_name);
+        // $data["sport"] = $sport->getSportByName($sport_name);
+        $data["Leagues"] = $leagues;
+        $json_data = json_encode($data);
+        return $this->prepareOkResponse($response, $data);
+    }
+
     //create 1 or more league
     public function leaguecreator(Request $request, Response $response)
     {
@@ -57,5 +83,5 @@ class leagueController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-    
+
 }

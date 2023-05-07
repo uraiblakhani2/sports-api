@@ -59,6 +59,15 @@ class SportModel extends BaseModel
         $sql = "SELECT * FROM sport WHERE sport_id =:sport_id ";
         return $this->run($sql,[":sport_id" =>$sport_id])->fetchAll();
     }
+
+    public function getSportByName(String $sport_name)
+    {
+        $sport_name = $sport_name . "%";
+        $sql = "SELECT * FROM sport WHERE sport_name LIKE :name ";
+        return $this->run($sql, [":name" => $sport_name])->fetch();
+    }
+
 }
+
 
 ?>

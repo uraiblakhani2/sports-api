@@ -5,9 +5,10 @@ namespace Vanier\Api\Controllers;
 use Vanier\Api\Models\sportModel;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
+use Vanier\Api\Controllers\CompositeResource;
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Vanier\Api\Helpers\CompositeResource;
 use Vanier\Api\Helpers\SportsDbController;
 use Vanier\Api\Helpers\Validator;
 
@@ -95,8 +96,8 @@ class SportsController extends BaseController
 
         $filters = $request->getQueryParams();
 
-        $sports_db = new CompositeResource();
-        $score = $sports_db->getScoreFromCricApi();
+        $crick_api = new CompositeResource();
+        $score = $crick_api->getScoreFromCricApi();
         $data["Live_Score"] = $score;
         $json_data = json_encode($data);
         return $this->prepareOkResponse($response, $data);

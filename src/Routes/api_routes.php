@@ -6,8 +6,11 @@ use Monolog\Handler\StreamHandler;
 use Vanier\Api\Controllers\FilmsController;
 use Vanier\Api\Controllers\ActorsController;
 use Vanier\Api\Controllers\CurrencyController;
+use Vanier\Api\Controllers\leagueController;
 use Vanier\Api\controllers\DistanceController;
 use Vanier\Api\Controllers\CustomersController;
+use Vanier\Api\Controllers\CountryController;
+
 use Vanier\Api\Controllers\CategoriesController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -63,12 +66,15 @@ $app->get('/match_bets', [MatchController::class, 'getAllMatch_bets']);
 
 //league Routes
 $app->get('/leagues', [leagueController::class, 'getAllLeagues']);
+$app->get('/leagues/{sport_name}/{country_name}',[leagueController::class, 'getAllLeaguesByCountry']);
+
 $app->post('/leagues', [leagueController::class, 'leagueCreator']);
 
 //Country Routes
 $app->get('/countries', [CountryController::class, 'getAllCountries']);
 $app->post('/countries', [CountryController::class, 'countryCreator']);
 $app->put('/countries', [CountryController::class, 'countryUpdate']);
+$app->get('/customers/{customer_id}/films', [CustomersController::class, 'handleGetFilmsByCustomer']);
 
 //currency conventor route
 $app->post('/distance', [CurrencyController::class, 'convert']);

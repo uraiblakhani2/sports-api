@@ -72,4 +72,11 @@ class CountryModel extends BaseModel
         $this->update($this->table_name, $sport, ["country_id"=>1]);
     }
 
+    public function getCountryByName(String $country_name)
+    {
+        $country_name = $country_name . "%";
+        $sql = "SELECT * FROM country WHERE country_name LIKE :name ";
+        return $this->run($sql, [":name" => $country_name])->fetch();
+    }
+
 }

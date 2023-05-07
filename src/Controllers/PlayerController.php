@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\PlayerModel;
+use Vanier\Api\Models\WSLoggingModel;
 
 class PlayerController extends BaseController
 {
@@ -26,8 +27,10 @@ class PlayerController extends BaseController
 
 
 
+
     public function getAllPlayers(Request $request, Response $response)
     {
+        $this->logAccessInfo($request);
 
         $filters = $request->getQueryParams();
         $validation = $this->validator->validatePlayersFilters($filters);

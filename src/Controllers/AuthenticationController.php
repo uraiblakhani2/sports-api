@@ -45,7 +45,7 @@ class AuthenticationController extends BaseController
 
         // Valid user detected => Now, we generate and return a JWT.
         // Current time stamp * 60 minutes * 60 seconds
-        $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"]];
+        $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"], "role" => $db_user["role"] ];
         //$expires_in = time() + 60 * 60;
         $expires_in = time() + 60; // Expires in 1 minute.
         $user_jwt = $jwtManager::generateToken($jwt_user_info, $expires_in);
@@ -84,7 +84,7 @@ class AuthenticationController extends BaseController
         }
         // The user account has been created successfully.
         return $this->prepareResponse($response,
-                ['error' => false, 'message' => 'The new user account has been created successfully!'], 400);
+                ['error' => false, 'message' => 'The new user account has been created successfully!'], 200);
     }
 
     public function prepareResponse(Response $response, $in_payload, $status_code) {

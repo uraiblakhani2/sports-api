@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2023 at 10:10 PM
+-- Generation Time: May 08, 2023 at 12:36 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -553,6 +553,13 @@ CREATE TABLE `ws_log` (
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `ws_log`
+--
+
+INSERT INTO `ws_log` (`id`, `email`, `user_action`, `logged_at`, `user_id`) VALUES
+(1, '123@gmail.com', '127.0.0.1 /sports-api/players', '2023-05-07 10:35:21', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -565,6 +572,7 @@ CREATE TABLE `ws_users` (
   `last_name` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `role` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '2022-12-01 08:11:50'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -572,8 +580,12 @@ CREATE TABLE `ws_users` (
 -- Dumping data for table `ws_users`
 --
 
-INSERT INTO `ws_users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `created_at`) VALUES
-(1, 'Fiacre', '123', '123@gmail.com', '$2y$15$vodPx/M768Wn8VUX0ixhGujMDjKaW8wCRxlEbuFUQ0p3B5v3oD5kS', '2023-05-07 08:10:29');
+INSERT INTO `ws_users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`) VALUES
+(1, 'Fiacre', '123', '123@gmail.com', '$2y$15$vodPx/M768Wn8VUX0ixhGujMDjKaW8wCRxlEbuFUQ0p3B5v3oD5kS', '', '2023-05-07 08:10:29'),
+(2, 'Uraib', '123', '123@gmail.com', '$2y$15$YG0e4FzBAMacVJ35FsN0puFV43nMcjkc.Pt3MGwvUqbONy/K/UrCS', '', '2023-05-07 09:53:39'),
+(3, 'John', '123', '123@gmail.com', '$2y$15$lZ2g/vmxPyxU1Gj0hfA/NuN5URGyLHOncFepIpuNJlYZuw6gIAlXS', 'admin', '2023-05-07 10:05:14'),
+(4, 'Test', '123', '123@gmail.com', '$2y$15$aknVSsemNlBdqMLx6wux.ePZtu0g9LFDjV7ANYCGmKhW1CqjwrsBC', '', '2023-05-07 10:24:11'),
+(5, 'Test', '123', '123@gmail.com', '$2y$15$U/AxEIpOaLGy4CVWvRRqEuV5tF05iGVvbGXx0zKLoqyGOClvW4veS', '', '2023-05-07 10:25:17');
 
 --
 -- Indexes for dumped tables
@@ -708,13 +720,13 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `ws_log`
 --
 ALTER TABLE `ws_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ws_users`
 --
 ALTER TABLE `ws_users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

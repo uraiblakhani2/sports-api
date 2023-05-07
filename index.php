@@ -6,12 +6,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Middleware\ContentLengthMiddleware;
 use Vanier\Api\Controllers\SportsController;
+use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Middleware\ContentNegotationMiddleware;
+use Vanier\Api\Middleware\JWTAuthMiddleware;
 
 
 define('APP_BASE_DIR', __DIR__);
 define('APP_ENV_CONFIG', 'config.env');
-
+define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -33,6 +35,10 @@ $app->add(new ContentNegotationMiddleware([APP_MEDIA_TYPE_JSON]));
 // NOTE: the error middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON);
+
+
+$jwt_secret = JWTManager::getSecretKey();
+$app->add(new JWTAuthMiddleware());
 
 // TODO: change the name of the subdirectory here.
 // You also need to change it in .htaccess

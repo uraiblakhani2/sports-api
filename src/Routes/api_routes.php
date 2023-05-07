@@ -10,6 +10,7 @@ use Vanier\Api\Controllers\leagueController;
 use Vanier\Api\controllers\DistanceController;
 use Vanier\Api\Controllers\CustomersController;
 use Vanier\Api\Controllers\CountryController;
+use Vanier\Api\Controllers\AuthenticationController;
 
 use Vanier\Api\Controllers\CategoriesController;
 use Psr\Http\Message\ResponseInterface as Response;

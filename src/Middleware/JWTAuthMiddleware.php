@@ -23,17 +23,23 @@ class JWTAuthMiddleware implements MiddlewareInterface
     {
         $uri = $request->getUri();
         $method = $request->getMethod();
-        //-- 1) Routes to ignore. 
+
+
+
+        //-- 1) Routes to ignore.
         // We need to ignore the routes that enables client applications
         // to create an account and request a JWT token.
         if (strpos($uri, 'account') !== false || strpos($uri, 'token') !== false) {
             return $handler->handle($request);
         }
-        //-- 2) Retrieve the token from the request Authorization's header. 
+        //-- 2) Retrieve the token from the request Authorization's header.
         $token = $request->getHeader('Authorization')[0] ?? '';
         //var_dump($token);exit;
         // Parse the token: remove the "Bearer " word.
         $parsed_token = explode(' ', $token)[1] ?? '';
+        // if (empty($parsed_token)) {
+        //     throw new HttpUnauthorizedException($request, 'Unauthorized.');
+        // }
 
         try {
             //-- 3) Try to decode the JWT token
@@ -57,11 +63,13 @@ class JWTAuthMiddleware implements MiddlewareInterface
         }
         //-- 5) The client application has been authorized:
         // Now we can store the token payload in the request object.
-        // This will allow the target resource's callback to access the token payload for various purposes (such as logging, etc.)        
+        // This will allow the target resource's callback to access the token payload for various purposes (such as logging, etc.)
         $request = $request->withAttribute(APP_JWT_TOKEN_KEY, $decoded_token);
         //var_dump($decoded_token);exit;
         //-- 6) Don't remove the following lines: we need to pass the request to the next
-        //      middleware in the middleware stack. 
+        //      middleware in the middleware stack.
         return $handler->handle($request);
     }
+
+
 }

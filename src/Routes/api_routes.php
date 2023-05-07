@@ -1,16 +1,5 @@
 <?php
 
-// use Psr\Http\Message\ResponseInterface as Response;
-// use Psr\Http\Message\ServerRequestInterface as Request;
-// use Vanier\Api\Controllers\AboutController;
-// use Vanier\Api\Controllers\CountryController;
-// use Vanier\Api\Controllers\leagueController;
-// use Vanier\Api\Controllers\MatchController;
-// use Vanier\Api\Controllers\PlayerController;
-// use Vanier\Api\Controllers\RankingController;
-// use Vanier\Api\Controllers\SportsController;
-// use Vanier\Api\Controllers\TeamController;
-
 use Monolog\Logger;
 use Slim\Factory\AppFactory;
 use Monolog\Handler\StreamHandler;
@@ -22,6 +11,7 @@ use Vanier\Api\Controllers\CustomersController;
 use Vanier\Api\Controllers\CategoriesController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Controllers\SportsController;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
 // Import the app instance into this file's scope.
@@ -39,6 +29,8 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
 $app->post('/sports', [SportsController::class, 'sportCreator']);
+$app->get('/sports/cricket/live_score', [SportsController::class, 'getLiveScores']);
+
 
 $app->put('/sports', [SportsController::class, 'sportUpdate']);
 

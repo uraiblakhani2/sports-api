@@ -1,34 +1,43 @@
 <?php
 
+
 namespace Vanier\Api\helpers;
 
 use Exception;
+use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Client;
 
 class WebServiceInvoker
 {
-    private $_request_options=[];
+    private array $request_options = [];
 
-    public function __construct(array $options=[])
+    public function __construct(array $options = [])
     {
-        $this->_request_options=$options;
+        $this->request_options = $options;
     }
 
-    public function InvokeUrl(string $resource_uri)
+
+    public function invokeUri(string $resource_uri)
     {
+
         $client = new Client();
-        $response = $client->request('GET', $resource_uri, $this->_request_options);
+        $response = $client->request(
+            'GET',
+            $resource_uri, $this->request_options
+        );
 
-        if($response->getStatusCode() !==200){
-            throw new Exception('Noppe, some wrong'.$response->getStatusCode().$response->getReasonPhrase());
+
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception("Something went wrong!" . $response->getStatusCode() . '' . $response->getReasonPhrase());
         }
 
-        if(str_contains($response->getHeader('Content-type')[0], 'application/json')){
-            throw new Exception('the data was not recived'.$response->getReasonPhrase());
+        if (!str_contains($response->getHeaderLine('Content-Type'), "application/json")) {
+
+            throw new Exception('Unprocessable document: JSON data required' . $response->getReasonPhrase());
+
         }
 
-        $data=$response->getBody()->getContents();
-
+        $data = $response->getBody()->getContents();
         return $data;
     }
 }

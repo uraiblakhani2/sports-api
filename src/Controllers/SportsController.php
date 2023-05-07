@@ -7,6 +7,8 @@ use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Helpers\CompositeResource;
+use Vanier\Api\Helpers\SportsDbController;
 use Vanier\Api\Helpers\Validator;
 
 use Vanier\Api\helpers\ValidationHelper;
@@ -24,7 +26,7 @@ class SportsController extends BaseController
     public function __construct()
     {
         $this->sports_model = new sportModel();
-        $this->validator= new Validator();
+        $this->validator = new Validator();
         $this->validator = new ValidationHelper();
 
     }
@@ -33,7 +35,7 @@ class SportsController extends BaseController
 
     public function getAllSports(Request $request, Response $response)
     {
-        
+
         $filters = $request->getQueryParams();
 
         //$validate = $this->validator->validateFilters($filtes);
@@ -87,4 +89,17 @@ class SportsController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
+
+    public function getLiveScores(Request $request, Response $response)
+    {
+
+        $filters = $request->getQueryParams();
+
+        $sports_db = new CompositeResource();
+        $score = $sports_db->getScoreFromCricApi();
+        $data["Live_Score"] = $score;
+        $json_data = json_encode($data);
+        return $this->prepareOkResponse($response, $data);
+    }
+
 }

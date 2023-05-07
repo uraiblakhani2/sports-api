@@ -81,7 +81,7 @@ class PlayerController extends BaseController
 
 
     //update player
-    public function sportUpdate(Request $request, Response $response)
+    public function playerUpdate(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 

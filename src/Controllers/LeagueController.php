@@ -56,8 +56,8 @@ class leagueController extends BaseController
         $sport = new SportModel();
         $leagues = $sports_db->fetchLeaguesByCountry($sport_name, $country_name);
 
-        // $data["country"] = $country->getCountryByName($country_name);
-        // $data["sport"] = $sport->getSportByName($sport_name);
+        $data["country"] = $country->getCountryByName($country_name);
+        $data["sport"] = $sport->getSportByName($sport_name);
         $data["Leagues"] = $leagues;
         $json_data = json_encode($data);
         return $this->prepareOkResponse($response, $data);

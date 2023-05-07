@@ -43,29 +43,27 @@ class CompositeResourceController extends WebServiceInvoker
 
 
     public function fetchLeaguesByCountry(string $sport, string $country): array
-    {
-        $uri = "https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?s=" . $sport . $country;
-        $data = $this->invokeUri($uri);
-        $leagues = json_decode($data);
+{
+    $uri = "https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?s=" . $sport . "&c=" . $country;
+    $data = $this->invokeUri($uri);
+    $leagues = json_decode($data);
 
-        $refind_leagues = [];
-        $index = 0;
+    $refind_leagues = [];
+    $index = 0;
 
-        foreach ($leagues->data as $key => $league) {
-            var_dump($league); exit;
-            $refined_teams[$index]['strTeam'] = $league->strTeam;
-            $refined_teams[$index]['intFormedYear'] = $league->intFormedYear;
-            $refined_teams[$index]['strSport'] = $league->strSport;
-            $refined_teams[$index]['strLeague'] = $league->strLeague;
-            $refined_teams[$index]['strDescriptionEN'] = $league->strDescriptionEN;
-            $refined_teams[$index]['strCountry'] = $league->strCountry;
+    foreach ($leagues->teams as $key => $league) {
+        $refind_leagues[$index]['strTeam'] = $league->strTeam;
+        $refind_leagues[$index]['intFormedYear'] = $league->intFormedYear;
+        $refind_leagues[$index]['strSport'] = $league->strSport;
+        $refind_leagues[$index]['strLeague'] = $league->strLeague;
+        $refind_leagues[$index]['strDescriptionEN'] = $league->strDescriptionEN;
+        $refind_leagues[$index]['strCountry'] = $league->strCountry;
 
-            $index++;
-        }
-
-
-        return $refind_leagues;
+        $index++;
     }
+
+    return $refind_leagues;
+}
 
 
 

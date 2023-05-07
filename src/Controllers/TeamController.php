@@ -65,7 +65,7 @@ class TeamController extends BaseController
     
 
     //update team
-    public function teampdate(Request $request, Response $response)
+    public function teamUpdate(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 

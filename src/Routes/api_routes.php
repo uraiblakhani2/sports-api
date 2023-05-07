@@ -14,7 +14,11 @@ use Vanier\Api\Controllers\CountryController;
 use Vanier\Api\Controllers\CategoriesController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Controllers\MatchController;
+use Vanier\Api\Controllers\PlayerController;
+use Vanier\Api\Controllers\RankingController;
 use Vanier\Api\Controllers\SportsController;
+use Vanier\Api\Controllers\TeamController;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
 // Import the app instance into this file's scope.
@@ -52,7 +56,7 @@ $app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
 $app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
 $app->post('/players', [PlayerController::class, 'playerCreator']);
-$app->put('/players', [PlayerController::class, 'cplayerUpdate']);
+$app->put('/players', [PlayerController::class, 'playerUpdate']);
 
 //Match Routes
 // TODO: test this routes

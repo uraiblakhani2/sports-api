@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2023 at 04:17 AM
+-- Generation Time: May 07, 2023 at 10:10 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -539,6 +539,42 @@ INSERT INTO `team` (`team_id`, `country_id`, `team_name`, `manager_name`, `ceo_n
 (9, 6, 'Sydney Swans', 'Tom Harley', 'Andrew Pridham', 'Sydney Cricket Ground', 'Red and White', 'Puma', 'John Longmire'),
 (10, 7, 'Yomiuri Giants', 'Kazuo Kuriyama', 'Yoshinobu Takahashi', 'Tokyo Dome', 'Orange and Black', 'Mizuno', 'Tatsunori Hara');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ws_log`
+--
+
+CREATE TABLE `ws_log` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `user_action` varchar(255) NOT NULL,
+  `logged_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ws_users`
+--
+
+CREATE TABLE `ws_users` (
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '2022-12-01 08:11:50'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `ws_users`
+--
+
+INSERT INTO `ws_users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `created_at`) VALUES
+(1, 'Fiacre', '123', '123@gmail.com', '$2y$15$vodPx/M768Wn8VUX0ixhGujMDjKaW8wCRxlEbuFUQ0p3B5v3oD5kS', '2023-05-07 08:10:29');
+
 --
 -- Indexes for dumped tables
 --
@@ -605,6 +641,18 @@ ALTER TABLE `team`
   ADD KEY `team_to_country` (`country_id`);
 
 --
+-- Indexes for table `ws_log`
+--
+ALTER TABLE `ws_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ws_users`
+--
+ALTER TABLE `ws_users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -655,6 +703,18 @@ ALTER TABLE `sport`
 --
 ALTER TABLE `team`
   MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `ws_log`
+--
+ALTER TABLE `ws_log`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ws_users`
+--
+ALTER TABLE `ws_users`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

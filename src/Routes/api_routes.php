@@ -32,6 +32,12 @@ global $app;
 $app->get('/', [AboutController::class, 'handleAboutApi']);
 
 
+// ROUTE: /account
+$app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);
+$app->post('/token', [AuthenticationController::class, 'handleGetToken']);
+
+
+
 
 // Sports Routes
 $app->get('/sports', [SportsController::class, 'getAllSports']);
@@ -56,7 +62,7 @@ $app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
 $app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
 $app->post('/players', [PlayerController::class, 'playerCreator']);
-$app->put('/players', [PlayerController::class, 'playerUpdate']);
+$app->put('/players', [PlayerController::class, 'playerUp7date']);
 
 //Match Routes
 // TODO: test this routes

@@ -77,7 +77,7 @@ class PlayerController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-    
+
 
 
     //update player

@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
+use Vanier\Api\Models\CountryModel;
 use Vanier\Api\Models\TeamModel;
 
 class TeamController extends BaseController
@@ -42,25 +43,32 @@ class TeamController extends BaseController
     }
 
 
-    //create 1 or more team
     public function teamCreator(Request $request, Response $response)
     {
+        $country_model = new CountryModel();
+
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
             foreach ($data as $key => $team) {
+                $validate = $this->validator->validateTeamsInsert($team);
+                if ($validate == "valid") {
+                    $country_info = $country_model->getCountryById($team["country_id"]);
+                    if (isset($country_info["country_id"])) {
+                        $this->team_model->createTeam($team);
+                        $res_message = ['Player has been created sucessfully'];
+                        return $this->prepareOkResponse($response, $res_message);
+                    } else {
+                        $res_message = '[country_id not found]';
+                        return $this->notFoundResponse($response, $res_message, 404);
 
-                $data = $this->team_model->createTeam($team);
+                    }
 
-
-                $res_message = ['team created'];
-
-                $json_data = json_encode($team);
-
-                $response->getBody()->write($json_data);
+                }
             }
+            return $this->notFoundResponse($response, $validate, 422);
+
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
 

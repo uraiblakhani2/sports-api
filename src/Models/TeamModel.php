@@ -51,9 +51,9 @@ class TeamModel extends BaseModel
             $sql .= " AND team_color like :team_color";
             $filters_value[":team_color"] = $filters["team_color"] . "%";
         }
-        if(isset($filters["team_sponser"])){
-            $sql .= " AND team_sponser like :team_sponser";
-            $filters_value[":team_sponser"] = $filters["team_sponser"] . "%";
+        if(isset($filters["team_sponsor"])){
+            $sql .= " AND team_sponsor like :team_sponsor";
+            $filters_value[":team_sponsor"] = $filters["team_sponsor"] . "%";
         }
 
         if(isset($filters["team_coach"])){

@@ -255,7 +255,7 @@ class ValidationHelper
             ),
 
 
-            'team_sponser' => array(
+            'team_sponsor' => array(
                 array('lengthMin', 3),
                 array('lengthMax', 100)
             ),
@@ -277,6 +277,74 @@ class ValidationHelper
             return $validator->errorsToJson();
         }
     }
+
+
+    public function validateTeamsInsert($data)
+    {
+
+        $rules = array(
+
+            'country_id' => array(
+                'required',
+                'integer'
+            ),
+
+            'team_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+
+
+
+            ),
+            'manager_name' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+
+            ),
+
+            'ceo_name' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+            'team_sponsor' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+            'team_court_name' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+            'team_color' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+
+            'team_coach' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
 
 
     public function validateMatches($data)

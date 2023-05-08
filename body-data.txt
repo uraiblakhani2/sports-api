@@ -92,3 +92,24 @@ Method: PUT
   }
 
 ]
+
+
+URI:
+localhost/sports-api/players
+Method: PUT
+
+[
+  {
+    "team_id": 2,
+    "country_id": "2",
+    "team_id": "1",
+    "player_name": "Test",
+    "age": 12,
+    "gender": "Male",
+    "height": 105,
+    "weight": 200,
+    "nbMatchPlayed": 3,
+    "status": "active"
+  }
+]
+

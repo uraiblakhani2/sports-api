@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
+use Vanier\Api\Exceptions\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\CountryModel;
 use Vanier\Api\Models\PlayerModel;
@@ -97,23 +98,35 @@ class PlayerController extends BaseController
 
 
 
-    //update player
+
     public function playerUpdate(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
-            foreach ($data as $key => $player) {
+            foreach ($data as $player) {
+                    $validate = $this->validator->validatePlayersInsert($player);
+                    if($validate == "valid"){
 
-                $data = $this->player_model->updatePlayer($player);
-                $res_message = ['player updated'];
+                        $player_exists = $this->player_model->getPlayerById($player['player_id']);
+                        if ($player_exists) {
+                            $player_id = $player["player_id"];
+                            unset($player["player_id"]);
+                            $this->player_model->updatePlayer($player, $player_id);
 
-                $json_data = json_encode($player);
+                            $res_message = ['Data has been updated sucessfully!'];
+                            return $this->prepareOkResponse($response, $res_message);
+                        }
 
-                $response->getBody()->write($json_data);
+                    }
+                    else{
+                        return $this->notFoundResponse($response, $validate);
+                    }
+                    $res_message = '[Player id not found]';
+                    return $this->notFoundResponse($response, $res_message);
+                    }
+
             }
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
-    }
 
 }

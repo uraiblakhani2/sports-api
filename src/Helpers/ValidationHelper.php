@@ -181,6 +181,10 @@ class ValidationHelper
     {
 
         $rules = array(
+            'player_id' => array(
+                'integer'
+            ),
+
             'age' => array(
                 'integer',
 

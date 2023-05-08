@@ -64,7 +64,7 @@ $app->delete('/league/rankings', [RankingController::class, 'rankingDelete']);
 $app->get('/players', [PlayerController::class, 'getAllPlayers']);
 $app->delete('/players/{player_id}', [PlayerController::class, 'playerDelete']);
 $app->post('/players', [PlayerController::class, 'playerCreator']);
-$app->put('/players', [PlayerController::class, 'playerUp7date']);
+$app->put('/players', [PlayerController::class, 'playerUpdate']);
 
 //Match Routes
 // TODO: test this routes

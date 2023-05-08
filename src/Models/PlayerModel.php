@@ -67,7 +67,7 @@ class PlayerModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
 
     }
-    
+
     //delete a player by ID
     public function deletePlayerByID(int $player_id)
     {
@@ -82,9 +82,20 @@ class PlayerModel extends BaseModel
         $this->insert($this->table_name, $player);
     }
 
-    public function updatePlayer(array $player)
+    public function updatePlayer(array $player, int $player_id)
     {
-        //pick some of the contained elements and use them in the insert statement
-        $this->update($this->table_name, $player, ["player_id"=>1]);
+        $this->update($this->table_name, $player, ["player_id" => $player_id]);
     }
+
+
+
+
+
+    public function getPlayerById(int $player_id)
+    {
+        $sql = "SELECT * FROM player WHERE player_id =:player_id ";
+        return $this->run($sql,[":player_id" =>$player_id])->fetchAll();
+    }
+
+
 }

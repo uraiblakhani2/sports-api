@@ -54,6 +54,9 @@ class ValidationHelper
 
 
 
+
+
+
     public function validateSportsFilters($data)
     {
 
@@ -87,7 +90,7 @@ class ValidationHelper
         $rules = array(
             'age' => array(
                 'integer',
-                
+
                 ['min', 5],
                 ['max', 60],
 
@@ -214,13 +217,13 @@ class ValidationHelper
         $rules = array(
             'home_score' => array(
                 'integer',
-                
+
                 ['min', 0],
             ),
 
             'away_score' => array(
                 'integer',
-                
+
                 ['min', 0],
             ),
 
@@ -260,7 +263,7 @@ class ValidationHelper
 
             'nbOfTeams' => array(
                 'integer',
-                
+
                 ['min', 3],
             ),
 
@@ -299,13 +302,13 @@ class ValidationHelper
         $rules = array(
             'games_won' => array(
                 'integer',
-                
+
                 ['min', 1],
             ),
 
             'games_lost' => array(
                 'integer',
-                
+
                 ['min', 1],
             ),
         );

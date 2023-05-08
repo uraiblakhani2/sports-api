@@ -46,20 +46,17 @@ class CountryController extends BaseController
 
         if (is_array($data)) {
             foreach ($data as $key => $country) {
-
-                $data = $this->country_model->createCountry($country);
-
-
-                $res_message = ['country created'];
-
-                $json_data = json_encode($country);
-
-                $response->getBody()->write($json_data);
+                $validate = $this->validator->validateCountries($country);
+                if ($validate == "valid") {
+                    $this->country_model->createCountry($country);
+                    $res_message = ['country has been created sucessfully'];
+                    return $this->prepareOkResponse($response, $res_message);
+                } else {
+                    return $this->notFoundResponse($response, $validate, 422);
+                }
             }
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-
 
 
     //update sport

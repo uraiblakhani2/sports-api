@@ -9,6 +9,7 @@ use Vanier\Api\Controllers\CurrencyController;
 use Vanier\Api\Controllers\leagueController;
 use Vanier\Api\controllers\DistanceController;
 use Vanier\Api\Controllers\CustomersController;
+use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\CountryController;
 use Vanier\Api\Controllers\AuthenticationController;
 
@@ -88,7 +89,7 @@ $app->put('/countries', [CountryController::class, 'countryUpdate']);
 $app->get('/customers/{customer_id}/films', [CustomersController::class, 'handleGetFilmsByCustomer']);
 
 //currency conventor route
-$app->post('/distance', [CurrencyController::class, 'convert']);
+$app->post('/currency', [CurrencyController::class, 'convert']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

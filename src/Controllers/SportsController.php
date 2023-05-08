@@ -96,7 +96,7 @@ class SportsController extends BaseController
 
         $filters = $request->getQueryParams();
 
-        $crick_api = new CompositeResource();
+        $crick_api = new CompositeResourceController();
         $score = $crick_api->getScoreFromCricApi();
         $data["Live_Score"] = $score;
         $json_data = json_encode($data);

@@ -56,7 +56,7 @@ class TeamController extends BaseController
                     $country_info = $country_model->getCountryById($team["country_id"]);
                     if (isset($country_info["country_id"])) {
                         $this->team_model->createTeam($team);
-                        $res_message = ['Player has been created sucessfully'];
+                        $res_message = ['Team has been created sucessfully'];
                         return $this->prepareOkResponse($response, $res_message);
                     } else {
                         $res_message = '[country_id not found]';

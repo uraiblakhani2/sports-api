@@ -66,11 +66,14 @@ class CountryModel extends BaseModel
     }
 
 
-    public function updateCountry(array $sport)
+
+
+    public function updateCountry(array $country, int $country_id)
     {
-        //pick some of the contained elements and use them in the insert statement
-        $this->update($this->table_name, $sport, ["country_id" => 1]);
+        $this->update($this->table_name, $country, ["country_id" => $country_id]);
     }
+
+
 
     public function getCountryByName(string $country_name)
     {

@@ -1,5 +1,7 @@
 URI:
 localhost/sports-api/countries
+Method: GET
+
 [
   {
     "country_name": "New Canada",
@@ -14,6 +16,7 @@ localhost/sports-api/countries
 
 URI:
 localhost/sports-api/players
+Method: GET
 
 [
   {
@@ -34,6 +37,7 @@ localhost/sports-api/players
 
 URI:
 localhost/sports-api/teams
+Method: GET
 
 [
   {
@@ -52,17 +56,39 @@ localhost/sports-api/teams
 
 URI:
 localhost/sports-api/sports
+Method: GET
+[
+  {
+    "sport_name": "Volleyball",
+    "sport_type": "Beach sport"
+  }
+]
+
+
+
+
+
+----------------------------------------------------------
+URI:
+localhost/sports-api/countries
+Method: PUT
 
 [
   {
-    "country_id": "2",
-    "team_id": "1",
-    "player_name": "Uraib",
-    "age": 12,
-    "gender": "Male"
-    "height": 105
-    "weight": 200
-    "nbMatchPlayed": 3
-    "status": "active"
+    "country_id": 13,
+    "country_name": "New Canada",
+    "capital_name": "Ottawa",
+    "continent_name": "North America",
+    "language": "English",
+    "currency_name": "USD"
+  },
+  {
+    "country_id": 14,
+    "country_name": "Uraib",
+    "capital_name": "Ottawa",
+    "continent_name": "North America",
+    "language": "English",
+    "currency_name": "CAD"
   }
+
 ]

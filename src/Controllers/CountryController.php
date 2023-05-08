@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
+use Vanier\Api\Exceptions\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\CountryModel;
 
@@ -59,22 +60,36 @@ class CountryController extends BaseController
     }
 
 
-    //update sport
+
+
     public function countryUpdate(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
-            foreach ($data as $key => $country) {
+            foreach ($data as $country) {
+                $existing_country = $this->country_model->getCountryById($country['country_id']);
+                if ($existing_country) {
+                    unset($country["country_id"]);
+                    $validate = $this->validator->validateCountries($country);
+                    if ($validate == "valid") {
+                        $this->country_model->updateCountry($country, $existing_country["country_id"]);
 
-                $data = $this->country_model->updateCountry($country);
-                $res_message = ['Sports updated'];
+                    } else {
 
-                $json_data = json_encode($country);
+                        return $this->notFoundResponse($response, $validate, 422);
+                    }
 
-                $response->getBody()->write($json_data);
+
+                } else {
+
+                    throw new HttpNotFoundException($request);
+
+                }
             }
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+
+        $res_message = ['Data has been updated sucessfully!'];
+        return $this->prepareOkResponse($response, $res_message);
     }
 }

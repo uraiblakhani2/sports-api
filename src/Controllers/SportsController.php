@@ -53,24 +53,26 @@ class SportsController extends BaseController
     //create 1 or more sport
     public function sportCreator(Request $request, Response $response)
     {
+
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
             foreach ($data as $key => $sport) {
+                $validate = $this->validator->validateSportsInsert($sport);
+                if ($validate == "valid") {
+                    $this->sports_model->createSport($sport);
+                    $res_message = ['Sports has been created sucessfully'];
+                    return $this->prepareOkResponse($response, $res_message);
+                } else {
+                    return $this->notFoundResponse($response, $validate, 422);
 
-                $data = $this->sports_model->createSport($sport);
 
+                }
 
-                $res_message = ['Sport created'];
-
-                $json_data = json_encode($sport);
-
-                $response->getBody()->write($json_data);
             }
-        }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
-    }
 
+        }
+    }
 
     //update sport
     public function sportUpdate(Request $request, Response $response)

@@ -84,6 +84,37 @@ class ValidationHelper
     }
 
 
+
+    public function validateSportsInsert($data)
+    {
+
+        $rules = array(
+
+            'sport_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+            'sport_type' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
     public function validatePlayers($data)
     {
 

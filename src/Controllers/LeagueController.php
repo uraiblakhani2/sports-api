@@ -34,7 +34,7 @@ class leagueController extends BaseController
     {
 
         $filters = $request->getQueryParams();
-        $validation = $this->validator->validateLeaguesFilters($filters);
+        $validation = $this->validator->validateLeagues($filters);
         if ($validation == "valid") {
             $data = $this->league_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);

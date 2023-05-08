@@ -69,14 +69,23 @@ class CountryModel extends BaseModel
     public function updateCountry(array $sport)
     {
         //pick some of the contained elements and use them in the insert statement
-        $this->update($this->table_name, $sport, ["country_id"=>1]);
+        $this->update($this->table_name, $sport, ["country_id" => 1]);
     }
 
-    public function getCountryByName(String $country_name)
+    public function getCountryByName(string $country_name)
     {
         $country_name = $country_name . "%";
         $sql = "SELECT * FROM country WHERE country_name LIKE :name ";
         return $this->run($sql, [":name" => $country_name])->fetch();
+    }
+
+
+    public function getCountryById(int $country_id)
+    {
+
+        $sql = "SELECT * FROM COUNTRY WHERE country_id = :country_id";
+
+        return $this->run($sql, [":country_id" => $country_id])->fetch();
     }
 
 }

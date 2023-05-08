@@ -23,7 +23,7 @@ class RankingController extends BaseController
     {
         $this->ranking_model = new RankingModel();
         $this->validator = new ValidationHelper();
-        
+
     }
 
 
@@ -32,7 +32,7 @@ class RankingController extends BaseController
     {
 
         $filters = $request->getQueryParams();
-        $validation = $this->validator->validateRankingFilters($filters);
+        $validation = $this->validator->validateRanking($filters);
         if ($validation == "valid") {
             $data = $this->ranking_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);

@@ -32,7 +32,7 @@ class TeamController extends BaseController
     {
 
         $filters = $request->getQueryParams();
-        $validation = $this->validator->validateTeamsFilters($filters);
+        $validation = $this->validator->validateTeams($filters);
         if ($validation == "valid") {
             $data = $this->team_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);
@@ -62,7 +62,7 @@ class TeamController extends BaseController
         }
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
-    
+
 
     //update team
     public function teamUpdate(Request $request, Response $response)

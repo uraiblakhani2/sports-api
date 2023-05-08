@@ -57,7 +57,7 @@ class ValidationHelper
 
 
 
-    public function validateSportsFilters($data)
+    public function validateSports($data)
     {
 
         $rules = array(
@@ -84,7 +84,7 @@ class ValidationHelper
     }
 
 
-    public function validatePlayersFilters($data)
+    public function validatePlayers($data)
     {
 
         $rules = array(
@@ -146,8 +146,76 @@ class ValidationHelper
 
 
 
+    public function validatePlayersInsert($data)
+    {
 
-    public function validateTeamsFilters($data)
+        $rules = array(
+            'age' => array(
+                'integer',
+
+                ['min', 5],
+                ['max', 60],
+
+            ),
+            'country_id' => array(
+                'required',
+                'integer'
+            ),
+            'team_id' => array(
+                'required',
+                'integer'
+            ),
+            'height' => array(
+                'integer',
+                ['min', 30],
+                ['max', 110],
+            ),
+
+            'player_number' => array(
+                'integer'
+            ),
+
+
+            'weight' => array(
+                'integer',
+                ['min', 50],
+                ['max', 400],
+            ),
+
+            'player_name' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+            'status' => array(
+                array('lengthMin', 3),
+                array('lengthMax', 20)
+            ),
+
+
+            'nbMatchPlayed' => array(
+                'integer',
+                ['min', 0],
+            ),
+
+
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
+
+
+
+    public function validateTeams($data)
     {
 
         $rules = array(
@@ -211,7 +279,7 @@ class ValidationHelper
     }
 
 
-    public function validateMatchesFilters($data)
+    public function validateMatches($data)
     {
 
         $rules = array(
@@ -249,7 +317,7 @@ class ValidationHelper
         }
     }
 
-    public function validateLeaguesFilters($data)
+    public function validateLeagues($data)
     {
 
         $rules = array(
@@ -297,7 +365,7 @@ class ValidationHelper
 
 
 
-    public function validateRankingFilters($data)
+    public function validateRanking($data)
     {
         $rules = array(
             'games_won' => array(

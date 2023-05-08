@@ -6,7 +6,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\helpers\ValidationHelper;
+use Vanier\Api\Models\CountryModel;
 use Vanier\Api\Models\PlayerModel;
+use Vanier\Api\Models\SportModel;
+use Vanier\Api\Models\TeamModel;
 use Vanier\Api\Models\WSLoggingModel;
 
 class PlayerController extends BaseController
@@ -33,7 +36,7 @@ class PlayerController extends BaseController
         $this->logAccessInfo($request);
 
         $filters = $request->getQueryParams();
-        $validation = $this->validator->validatePlayersFilters($filters);
+        $validation = $this->validator->validatePlayers($filters);
         if ($validation == "valid") {
             $data = $this->player_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);
@@ -63,23 +66,34 @@ class PlayerController extends BaseController
     //create 1 or more player
     public function playerCreator(Request $request, Response $response)
     {
+        $country_model = new CountryModel();
+        $team_model = new TeamModel();
+
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
             foreach ($data as $key => $player) {
+                $validate = $this->validator->validatePlayersInsert($player);
+                if ($validate == "valid") {
+                    $country_info = $country_model->getCountryById($player["country_id"]);
+                    $team_info = $team_model->getTeamById($player["team_id"]);
+                    if (isset($country_info["country_id"]) && isset($team_info["team_id"])) {
+                        $this->player_model->createPlayer($player);
+                        $res_message = ['Player has been created sucessfully'];
+                        return $this->prepareOkResponse($response, $res_message);
+                    } else {
+                        $res_message = '[country_id or team_id not found]';
+                        return $this->notFoundResponse($response, $res_message, 404);
 
-                $data = $this->player_model->createPlayer($player);
+                    }
 
-
-                $res_message = ['Player created'];
-
-                $json_data = json_encode($player);
-
-                $response->getBody()->write($json_data);
+                }
             }
+            return $this->notFoundResponse($response, $validate, 422);
+
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
+
 
 
 

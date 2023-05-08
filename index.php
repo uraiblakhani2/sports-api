@@ -37,8 +37,8 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON);
 
 
-$jwt_secret = JWTManager::getSecretKey();
-$app->add(new JWTAuthMiddleware());
+// $jwt_secret = JWTManager::getSecretKey();
+// $app->add(new JWTAuthMiddleware());
 
 // TODO: change the name of the subdirectory here.
 // You also need to change it in .htaccess

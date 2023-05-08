@@ -1,0 +1,70 @@
+URI:
+localhost/sports-api/countries
+[
+  {
+    "country_name": "New Canada",
+    "capital_name": "Ottawa",
+    "continent_name": "North America",
+    "language": "English",
+    "currency_name": "CAD"
+  }
+]
+
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/players
+
+[
+  {
+    "country_id": "2",
+    "team_id": "1",
+    "player_name": "Uraib",
+    "age": 12,
+    "gender": "Male",
+    "height": 105,
+    "weight": 200,
+    "nbMatchPlayed": 3,
+    "status": "active"
+  }
+]
+
+
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/teams
+
+[
+  {
+    "country_id": "2",
+    "team_id": "1",
+    "player_name": "Uraib",
+    "age": 12,
+    "gender": "Male",
+    "height": 105,
+    "weight": 200,
+    "nbMatchPlayed": 3,
+    "status": "active"
+  }
+]
+
+
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/sports
+
+[
+  {
+    "country_id": "2",
+    "team_id": "1",
+    "player_name": "Uraib",
+    "age": 12,
+    "gender": "Male"
+    "height": 105
+    "weight": 200
+    "nbMatchPlayed": 3
+    "status": "active"
+  }
+]

@@ -29,7 +29,7 @@ class MatchController extends BaseController
     {
 
         $filters = $request->getQueryParams();
-        $validation = $this->validator->validateMatchesFilters($filters);
+        $validation = $this->validator->validateMatches($filters);
         if ($validation == "valid") {
             $data = $this->match_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);

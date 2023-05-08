@@ -41,7 +41,7 @@ class SportsController extends BaseController
 
         //$validate = $this->validator->validateFilters($filtes);
         $sports_model = new sportModel();
-        $validation = $this->validator->validateSportsFilters($filters);
+        $validation = $this->validator->validateSports($filters);
         if ($validation == "valid") {
             $data = $this->sports_model->getAll($filters);
             return $this->prepareOkResponse($response, $data);

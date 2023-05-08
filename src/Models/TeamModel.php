@@ -84,6 +84,18 @@ class TeamModel extends BaseModel
         $this->update($this->table_name, $team, ["team_id"=>1]);
     }
 
+
+
+    public function getTeamById(int $team_id)
+    {
+
+        $sql = "SELECT * FROM TEAM WHERE team_id = :team_id";
+
+        return $this->run($sql, [":team_id" => $team_id])->fetch();
+    }
+
+
+
     /*
     filters to return:
         coach

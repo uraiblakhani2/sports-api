@@ -44,10 +44,22 @@ class RankingController extends BaseController
 
     public function rankingDelete(Request $request, Response $response, array $uri_args)
     {
-        $ranking_model = new RankingModel();
-        $ranking_id = $uri_args['ranking_id'];
 
-        $ranking_model->getLeaguebyRankings($ranking_id);
+        $data = $request->getParsedBody();
+
+
+        $ranking_model = new RankingModel();
+
+
+        $count = count($data);
+
+        for ($i = 0; $i < $count; $i++) {
+
+            $ranking_id = $data[$i];
+
+            $ranking_model->DeleteRankingByLeague($ranking_id);
+        }
+
 
         $res_message = ['Data has been deleted sucessfully!'];
         $json_data = json_encode($res_message);

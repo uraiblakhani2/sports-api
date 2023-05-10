@@ -56,10 +56,5 @@ class RankingModel extends BaseModel
         $smt = $this->run($sql, [":ranking_id" => $ranking_id])->fetchAll();
     }
 
-    /*
-    filters to return:
-        games_won
-        games_lost
-    */
 
 }

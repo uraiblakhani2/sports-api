@@ -493,4 +493,37 @@ class ValidationHelper
             return $validator->errorsToJson();
         }
     }
+
+
+    public function validateCurrency($data)
+    {
+        $rules = array(
+            'from' => array(
+                'required',
+                array('lengthMin', 3),
+                array('lengthMax', 4)
+            ),
+
+            'to' => array(
+                'required',
+                array('lengthMin', 3),
+                array('lengthMax', 4)
+            ),
+
+            'amount' => array(
+                'required',
+                'integer',
+            ),
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
 }

@@ -89,7 +89,7 @@ $app->put('/countries', [CountryController::class, 'countryUpdate']);
 $app->get('/customers/{customer_id}/films', [CustomersController::class, 'handleGetFilmsByCustomer']);
 
 //currency conventor route
-$app->post('/currency', [CurrencyController::class, 'convert']);
+$app->post('/currency', [CurrencyController::class, 'calculateRate']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

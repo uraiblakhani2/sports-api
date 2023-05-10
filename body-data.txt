@@ -1,6 +1,6 @@
 URI:
 localhost/sports-api/countries
-Method: GET
+Method: POST
 
 [
   {
@@ -16,7 +16,7 @@ Method: GET
 
 URI:
 localhost/sports-api/players
-Method: GET
+Method: POST
 
 [
   {
@@ -37,7 +37,7 @@ Method: GET
 
 URI:
 localhost/sports-api/teams
-Method: GET
+Method: POST
 
 [
   {
@@ -56,13 +56,33 @@ Method: GET
 
 URI:
 localhost/sports-api/sports
-Method: GET
+Method: POST
 [
   {
     "sport_name": "Volleyball",
     "sport_type": "Beach sport"
   }
 ]
+
+
+
+
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/currency
+Method: POST
+
+[
+  {
+    "from": "USD",
+    "to": "CAD",
+    "amount": 30
+  }
+]
+
+
+
 
 
 
@@ -93,6 +113,7 @@ Method: PUT
 
 ]
 
+----------------------------------------------------------
 
 URI:
 localhost/sports-api/players
@@ -112,4 +133,6 @@ Method: PUT
     "status": "active"
   }
 ]
+
+
 

@@ -3,6 +3,7 @@
 namespace Vanier\Api\Controllers;
 
 use GuzzleHttp\Client;
+use Vanier\Api\Exceptions\HttpNotFoundException;
 use Vanier\Api\helpers\WebServiceInvoker;
 
 class CompositeResourceController extends WebServiceInvoker
@@ -63,6 +64,24 @@ class CompositeResourceController extends WebServiceInvoker
     }
 
     return $refind_leagues;
+}
+
+
+public function fetchCurrencyRate(string $from_currency, string $to_currency)
+{
+    $from_currency = strtolower($from_currency);
+    $to_currency = strtolower($to_currency);
+
+    $uri = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" . $from_currency . "/" . $to_currency . ".json";
+    $data = $this->invokeUri($uri);
+    $decodedData = json_decode($data);
+
+    if (property_exists($decodedData, $to_currency)) {
+        return $decodedData->$to_currency;
+    } else {
+        // handle the error or throw an exception
+        return null;
+    }
 }
 
 

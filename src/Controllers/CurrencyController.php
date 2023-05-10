@@ -2,42 +2,62 @@
 
 namespace Vanier\Api\Controllers;
 
-namespace Vanier\Api\controllers;
-use Exception;
+use mysqli;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
+use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\models\CurrencyModel;
-use Vanier\Api\Helpers\CurrencyConverter;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Vanier\Api\Models\BaseModel;
 
-class CurrencyController extends BaseModel
+class CurrencyController extends BaseController
 {
-    private $currencyConverter;
+    private $currency_model = null;
+    private $validator = null;
 
-    public function __construct($conventor_id)
+
+
+    public function __construct()
     {
-        $this->currencyConverter = CurrencyModel::find($conventor_id);
+        $this->currency_model = new CurrencyModel();
+        $this->validator = new ValidationHelper();
     }
 
-    public function convert($amount, $fromCurrency, $toCurrency)
+    public function calculateRate(Request $request, Response $response)
     {
-        // Replace this with your API key and exchange rates fetcher
-        // $exchangeRates = fetchExchangeRates($this->currencyConverter->currency);
 
-        // Mock exchange rates
-        $exchangeRates = [
-            'USD' => 1,
-            'EUR' => 0.85,
-            'GBP' => 0.74,
-        ];
+        $data = $request->getParsedBody();
 
-        if (!isset($exchangeRates[$fromCurrency]) || !isset($exchangeRates[$toCurrency])) {
-            throw new Exception("Invalid currency code");
+        if (is_array($data)) {
+            foreach ($data as $currency) {
+
+                $validation = $this->validator->validateCurrency($currency);
+
+                if ($validation == "valid") {
+                    $from_currency = $currency["from"];
+                    $to_currency = $currency["to"];
+                    $amount = $currency["amount"];
+
+
+                    $from = $this->currency_model->getCurrencyFromCode($from_currency);
+
+                    $to = $this->currency_model->getCurrencyFromCode($to_currency);
+
+                    $currency_rate = new CompositeResourceController();
+                    $rate = $currency_rate->fetchCurrencyRate($from_currency, $to_currency);
+                    $from_currency_2 = floatval($from_currency);
+                    $conversion = $amount * $rate;
+                    $currency['rate'] = $rate;
+                    $currency['result'] = $conversion;
+                    return $this->prepareOkResponse($response, $currency);
+
+
+                } else {
+                    return $this->notFoundResponse($response, $validation, 400);
+                }
+
+
+
+            }
         }
-
-        $baseAmount = $amount / $exchangeRates[$fromCurrency];
-        $convertedAmount = $baseAmount * $exchangeRates[$toCurrency];
-
-        return $convertedAmount;
     }
+
 }

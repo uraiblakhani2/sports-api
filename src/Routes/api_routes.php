@@ -105,7 +105,6 @@ $app->get('/logMe', function (Request $request, Response $response, $args) {
     $logger->pushHandler($logger_handler);
     $db_logger = new Logger("database_logs");
     $db_logger->pushHandler($logger_handler);
-    $db_logger->info("This query failed...");
     $params = $request->getQueryParams();
     $logger->info("Access ".$request->getMethod(). ' '.$request->getUri()->getPath(), $params);
     $response->getBody()->write("Reporting! Logging in process!");

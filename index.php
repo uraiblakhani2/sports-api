@@ -8,6 +8,7 @@ use Slim\Middleware\ContentLengthMiddleware;
 use Vanier\Api\Controllers\SportsController;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Middleware\ContentNegotationMiddleware;
+use Vanier\Api\Middleware\FileLoggingMiddleware;
 use Vanier\Api\Middleware\JWTAuthMiddleware;
 use Vanier\Api\Middleware\LoggingMiddleware;
 
@@ -27,6 +28,9 @@ $app = AppFactory::create();
 //-- Add the routing and body parsing middleware.
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
+
+$app->add(new FileLoggingMiddleware());
+
 // $app->add(new LoggingMiddleware());
 
 

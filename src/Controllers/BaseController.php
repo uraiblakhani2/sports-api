@@ -17,15 +17,6 @@ class BaseController
 
     }
 
-    protected function logAccessInfo(Request $request){
-        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        $logging_model = new WSLoggingModel();
-        $request_info = $_SERVER["REMOTE_ADDR"] . ' '. $request->getUri()->getPath();
-        $logging_model->logUserAction($token_payload, $request_info);
-
-    }
-
-
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
     {
         // var_dump($data);

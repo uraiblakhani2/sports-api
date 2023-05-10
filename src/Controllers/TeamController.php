@@ -78,16 +78,27 @@ class TeamController extends BaseController
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
-            foreach ($data as $key => $team) {
+            foreach ($data as $team) {
+                $validate = $this->validator->validateTeamsInsert($team);
+                if ($validate == "valid") {
 
-                $data = $this->team_model->updateTeam($team);
-                $res_message = ['player updated'];
+                    $team_exists = $this->team_model->getTeamById($team['team_id']);
+                    if ($team_exists) {
+                        $team_id = $team["team_id"];
+                        unset($team["team_id"]);
+                        $this->team_model->updateTeam($team, $team_id);
 
-                $json_data = json_encode($team);
+                        $res_message = ['Data has been updated sucessfully!'];
+                        return $this->prepareOkResponse($response, $res_message);
+                    }
 
-                $response->getBody()->write($json_data);
+                } else {
+                    return $this->notFoundResponse($response, $validate);
+                }
+                $res_message = '[Team id not found]';
+                return $this->notFoundResponse($response, $res_message);
             }
+
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 }

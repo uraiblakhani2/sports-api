@@ -80,17 +80,28 @@ class SportsController extends BaseController
         $data = $request->getParsedBody();
 
         if (is_array($data)) {
-            foreach ($data as $key => $sport) {
+            foreach ($data as $sport) {
+                $validate = $this->validator->validateSportsInsert($sport);
+                if ($validate == "valid") {
 
-                $data = $this->sports_model->updateSport($sport);
-                $res_message = ['Sports updated'];
+                    $sport_exists = $this->sports_model->getSportById($sport['sport_id']);
+                    if ($sport_exists) {
+                        $sport_id = $sport["sport_id"];
+                        unset($sport["sport_id"]);
+                        $this->sports_model->updateSport($sport, $sport_id);
 
-                $json_data = json_encode($sport);
+                        $res_message = ['Data has been updated sucessfully!'];
+                        return $this->prepareOkResponse($response, $res_message);
+                    }
 
-                $response->getBody()->write($json_data);
+                } else {
+                    return $this->notFoundResponse($response, $validate);
+                }
+                $res_message = '[Sport id not found]';
+                return $this->notFoundResponse($response, $res_message);
             }
+
         }
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 
     public function getLiveScores(Request $request, Response $response)

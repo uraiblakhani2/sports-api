@@ -48,10 +48,9 @@ class SportModel extends BaseModel
     }
 
 
-    public function updateSport(array $sport)
+    public function updateSport(array $sport, int $sport_id)
     {
-        //pick some of the contained elements and use them in the insert statement
-        $this->update($this->table_name, $sport, ["sport_id"=>1]);
+        $this->update($this->table_name, $sport, ["sport_id" => $sport_id]);
     }
 
     public function getSportById(int $sport_id)

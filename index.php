@@ -9,10 +9,11 @@ use Vanier\Api\Controllers\SportsController;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Middleware\ContentNegotationMiddleware;
 use Vanier\Api\Middleware\JWTAuthMiddleware;
-
+use Vanier\Api\Middleware\LoggingMiddleware;
 
 define('APP_BASE_DIR', __DIR__);
 define('APP_ENV_CONFIG', 'config.env');
+
 define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
 
 
@@ -26,6 +27,8 @@ $app = AppFactory::create();
 //-- Add the routing and body parsing middleware.
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
+// $app->add(new LoggingMiddleware());
+
 
 
 $app->add(new ContentNegotationMiddleware([APP_MEDIA_TYPE_JSON]));

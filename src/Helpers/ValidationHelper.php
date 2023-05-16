@@ -520,7 +520,8 @@ class ValidationHelper
         // Important: map the validation rules before calling validate()
         $validator->mapFieldsRules($rules);
         if ($validator->validate()) {
-            return "valid";
+            //return "valid";
+            return true;
         } else {
             return $validator->errorsToJson();
         }

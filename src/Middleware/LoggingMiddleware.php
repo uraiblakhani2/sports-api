@@ -26,11 +26,16 @@ class LoggingMiddleware implements MiddlewareInterface
         $method = $request->getMethod();
 
         $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        $logging_model = new WSLoggingModel();
+        if(!$token_payload){
+            // echo "test"; exit;
+
+        }
+        else{
+            $logging_model = new WSLoggingModel();
         $request_info = $_SERVER["REMOTE_ADDR"] . ' '. $request->getUri()->getPath();
         // var_dump($token_payload); exit;
         $logging_model->logUserAction($token_payload, $request_info);
-
+        }
 
         return $handler->handle($request);
     }

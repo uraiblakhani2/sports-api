@@ -34,7 +34,6 @@ class PlayerController extends BaseController
 
     public function getAllPlayers(Request $request, Response $response)
     {
-        $this->logAccessInfo($request);
 
         $filters = $request->getQueryParams();
         $validation = $this->validator->validatePlayers($filters);

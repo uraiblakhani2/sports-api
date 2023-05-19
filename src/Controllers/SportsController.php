@@ -2,6 +2,7 @@
 
 namespace Vanier\Api\Controllers;
 
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Models\sportModel;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
@@ -56,7 +57,7 @@ class SportsController extends BaseController
 
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $key => $sport) {
                 $validate = $this->validator->validateSportsInsert($sport);
                 if ($validate == "valid") {
@@ -72,6 +73,11 @@ class SportsController extends BaseController
             }
 
         }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
+        }
+
+
     }
 
     //update sport

@@ -81,8 +81,37 @@ Method: POST
   }
 ]
 
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/account
+Method: POST
 
 
+{
+  "first_name": "uraib",
+  "last_name": "lakhani",
+  "email": "uraiblakhani@gmail.com",
+  "password": "132",
+  "role": "admin"
+}
+
+
+
+----------------------------------------------------------
+
+URI:
+localhost/sports-api/token
+Method: POST
+
+
+{
+  "first_name": "uraib",
+  "last_name": "lakhani",
+  "email": "uraiblakhani@gmail.com",
+  "password": "132",
+  "role": "admin"
+}
 
 
 
@@ -133,6 +162,8 @@ Method: PUT
     "status": "active"
   }
 ]
+
+
 
 
 

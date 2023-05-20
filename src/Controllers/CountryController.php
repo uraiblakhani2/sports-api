@@ -54,12 +54,16 @@ class CountryController extends BaseController
                     $res_message = ['country has been created sucessfully'];
                     return $this->prepareOkResponse($response, $res_message);
                 } else {
+
                     return $this->notFoundResponse($response, $validate, 422);
+
                 }
             }
         }
         else{
+
             throw new HttpBadRequestException($request, "Body data cannot be empty");
+
         }
     }
 

@@ -84,3 +84,7 @@
 [2023-05-20T04:07:08.240397+02:00] test-log.INFO: Access POST /sports-api/currency [] []
 [2023-05-20T04:08:35.540239+02:00] test-log.INFO: Access POST /sports-api/currency [] []
 [2023-05-20T04:09:48.386422+02:00] test-log.INFO: Access POST /sports-api/currency [] []
+[2023-05-20T04:22:27.598861+02:00] test-log.INFO: Access POST /sports-api/countries [] []
+[2023-05-20T04:22:27.624398+02:00] test-log.INFO: {"capital_name":["Capital Name is required","Capital Name must be at least 3 characters long","Capital Name must not exceed 100 characters"],"continent_name":["Continent Name is required","Continent Name must be at least 3 characters long"],"language":["Language is required","Language must be at least 3 characters long","Language must not exceed 100 characters"],"currency_name":["Currency Name is required","Currency Name must be at least 3 characters long","Currency Name must not exceed 100 characters"]} [] []
+[2023-05-20T04:24:31.167712+02:00] test-log.INFO: Access POST /sports-api/players [] []
+[2023-05-20T04:24:31.203405+02:00] test-log.INFO: {"country_id":["Country Id is required","Country Id must be an integer"],"team_id":["Team Id is required","Team Id must be an integer"]} [] []

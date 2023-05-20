@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\Controllers\CompositeResourceController;
@@ -81,6 +82,11 @@ class leagueController extends BaseController
     public function leaguecreator(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+
+        if (empty($data)) {
+            throw new HttpBadRequestException($request, "malformed body. It can't be empty");
+
+        }
 
         if (is_array($data)) {
             foreach ($data as $key => $league) {

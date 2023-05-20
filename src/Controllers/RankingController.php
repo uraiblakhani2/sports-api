@@ -3,8 +3,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
-
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\BaseModel;
 use Vanier\Api\Models\RankingModel;
@@ -47,6 +46,10 @@ class RankingController extends BaseController
 
         $data = $request->getParsedBody();
 
+        if (empty($data)) {
+            throw new HttpBadRequestException($request, "malformed body. It can't be empty");
+
+        }
 
         $ranking_model = new RankingModel();
 

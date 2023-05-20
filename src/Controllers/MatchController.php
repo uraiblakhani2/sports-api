@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\helpers\ValidationHelper;
 use Vanier\Api\Models\MatchModel;
@@ -42,7 +43,14 @@ class MatchController extends BaseController
     //create 1 or more match
     public function matchcreator(Request $request, Response $response)
     {
+
         $data = $request->getParsedBody();
+
+        if (empty($data)) {
+            throw new HttpBadRequestException($request, "malformed body. It can't be empty");
+
+        }
+
 
         if (is_array($data)) {
             foreach ($data as $key => $match) {

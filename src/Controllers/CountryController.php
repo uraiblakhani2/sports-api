@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\Exceptions\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
@@ -45,7 +46,7 @@ class CountryController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $key => $country) {
                 $validate = $this->validator->validateCountries($country);
                 if ($validate == "valid") {
@@ -57,6 +58,9 @@ class CountryController extends BaseController
                 }
             }
         }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
+        }
     }
 
 
@@ -66,7 +70,7 @@ class CountryController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $country) {
                 $existing_country = $this->country_model->getCountryById($country['country_id']);
                 if ($existing_country) {
@@ -87,6 +91,9 @@ class CountryController extends BaseController
 
                 }
             }
+        }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
         }
 
         $res_message = ['Data has been updated sucessfully!'];

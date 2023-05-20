@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Controllers\BaseController;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
@@ -49,7 +50,7 @@ class TeamController extends BaseController
 
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $key => $team) {
                 $validate = $this->validator->validateTeamsInsert($team);
                 if ($validate == "valid") {
@@ -69,6 +70,9 @@ class TeamController extends BaseController
             return $this->notFoundResponse($response, $validate, 422);
 
         }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
+        }
     }
 
 
@@ -77,7 +81,7 @@ class TeamController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $team) {
                 $validate = $this->validator->validateTeamsInsert($team);
                 if ($validate == "valid") {
@@ -99,6 +103,9 @@ class TeamController extends BaseController
                 return $this->notFoundResponse($response, $res_message);
             }
 
+        }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
         }
     }
 }

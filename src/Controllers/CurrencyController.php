@@ -29,7 +29,7 @@ class CurrencyController extends BaseController
         $data = $request->getParsedBody();
         if (empty($data)) {
             throw new HttpBadRequestException($request, "malformed body. It can't be empty");
-            
+
         }
 
         if (is_array($data)) {
@@ -51,7 +51,7 @@ class CurrencyController extends BaseController
                     // }
                     $currency_rate = new CompositeResourceController();
                     $rate = $currency_rate->fetchCurrencyRate($from_currency, $to_currency);
-                    
+
                     $from_currency_2 = floatval($from_currency);
                     $conversion = $amount * $rate;
                     $currency['rate'] = $rate;

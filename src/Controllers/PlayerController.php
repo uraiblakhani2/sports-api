@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\Exceptions\HttpNotFoundException;
 use Vanier\Api\helpers\ValidationHelper;
@@ -71,7 +72,7 @@ class PlayerController extends BaseController
 
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $key => $player) {
                 $validate = $this->validator->validatePlayersInsert($player);
                 if ($validate == "valid") {
@@ -92,6 +93,9 @@ class PlayerController extends BaseController
             return $this->notFoundResponse($response, $validate, 422);
 
         }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
+        }
     }
 
 
@@ -102,7 +106,7 @@ class PlayerController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $player) {
                     $validate = $this->validator->validatePlayersInsert($player);
                     if($validate == "valid"){
@@ -126,6 +130,10 @@ class PlayerController extends BaseController
                     }
 
             }
+            else{
+                throw new HttpBadRequestException($request, "Body data cannot be empty");
+            }
+
         }
 
 }

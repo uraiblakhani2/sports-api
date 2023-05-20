@@ -85,7 +85,7 @@ class SportsController extends BaseController
     {
         $data = $request->getParsedBody();
 
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $sport) {
                 $validate = $this->validator->validateSportsInsert($sport);
                 if ($validate == "valid") {
@@ -107,6 +107,9 @@ class SportsController extends BaseController
                 return $this->notFoundResponse($response, $res_message);
             }
 
+        }
+        else{
+            throw new HttpBadRequestException($request, "Body data cannot be empty");
         }
     }
 

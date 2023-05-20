@@ -165,5 +165,21 @@ Method: PUT
 
 
 
+----------------------------------------------------------
+URI:
+localhost/sports-api/teams
+Method: PUT
 
-
+[
+  {
+    "country_id": 5,
+    "team_id": 1,
+    "team_name": "Arsenal",
+    "manager_name": "James",
+    "ceo_name": "Uraib",
+    "team_court_name": "Staples",
+    "team_color": "Orange",
+    "team_sponsor": "John",
+    "team_coach": "Fiacre"
+  }
+]

@@ -88,6 +88,7 @@ class TeamController extends BaseController
 
                     $team_exists = $this->team_model->getTeamById($team['team_id']);
                     if ($team_exists) {
+
                         $team_id = $team["team_id"];
                         unset($team["team_id"]);
                         $this->team_model->updateTeam($team, $team_id);

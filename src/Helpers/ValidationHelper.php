@@ -324,6 +324,10 @@ class ValidationHelper
                 'integer'
             ),
 
+            'team_id' => array(
+                'integer'
+            ),
+
             'team_name' => array(
                 "required",
                 array('lengthMin', 3),

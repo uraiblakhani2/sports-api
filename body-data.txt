@@ -118,6 +118,30 @@ Method: POST
 
 
 ----------------------------------------------------------
+
+URI:
+localhost/sports-api/matches
+Method: POST
+
+
+
+[
+  {
+    "sport_id": 3,
+    "country_id": 1,
+    "league_id": 1,
+    "home_team_id": 1,
+    "away_team_id": 2,
+    "home_score": 112,
+    "away_score": 98,
+    "match_date": "2023-03-24",
+    "stadium_name": "Staples Center"
+  }
+]
+
+
+
+----------------------------------------------------------
 URI:
 localhost/sports-api/countries
 Method: PUT

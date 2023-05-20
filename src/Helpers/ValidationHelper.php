@@ -54,6 +54,52 @@ class ValidationHelper
 
 
 
+    public function validateCountriesInsert($data)
+    {
+
+        $rules = array(
+            'country_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+            'capital_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+            'continent_name' => array(
+                "required",
+                array('lengthMin', 3),
+            ),
+
+            'language' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+            'currency_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
+
 
 
 
@@ -424,6 +470,49 @@ class ValidationHelper
         }
     }
 
+    public function validateMatchesInsert($data)
+    {
+
+        $rules = array(
+            'home_score' => array(
+                "required",
+                'integer',
+
+                ['min', 0],
+            ),
+
+            'away_score' => array(
+                "required",
+                'integer',
+
+                ['min', 0],
+            ),
+
+            'match_date' => array(
+                "required",
+                ['dateFormat', 'Y-m-d'],
+            ),
+
+            'stadium_name' => array(
+                "required",
+                array('lengthMin', 3),
+                array('lengthMax', 100)
+            ),
+
+
+        );
+
+        $validator = new Validator($data);
+        // Important: map the validation rules before calling validate()
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return "valid";
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
+
     public function validateLeagues($data)
     {
 
@@ -516,7 +605,7 @@ class ValidationHelper
 
             'amount' => array(
                 'required',
-                'integer',
+                'numeric',
             ),
         );
 

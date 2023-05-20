@@ -51,20 +51,24 @@ class MatchController extends BaseController
 
         }
 
-
-        if (is_array($data)) {
+        if ((is_array($data)) && (!empty($data))) {
             foreach ($data as $key => $match) {
+                $validate = $this->validator->validateMatchesInsert($match);
+                if ($validate == "valid") {
+                    $this->match_model->createMatch($match);
+                    $res_message = ['Match has been created sucessfully'];
+                    return $this->prepareOkResponse($response, $res_message);
+                } else {
+                    return $this->notFoundResponse($response, $validate, 422);
 
-                $data = $this->match_model->createMatch($match);
 
+                }
 
-                $res_message = ['match created'];
-
-                $json_data = json_encode($match);
-
-                $response->getBody()->write($json_data);
             }
+
         }
+
+
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
     }
 

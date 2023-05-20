@@ -48,7 +48,7 @@ class CountryController extends BaseController
 
         if ((is_array($data)) && (!empty($data) )) {
             foreach ($data as $key => $country) {
-                $validate = $this->validator->validateCountries($country);
+                $validate = $this->validator->validateCountriesInsert($country);
                 if ($validate == "valid") {
                     $this->country_model->createCountry($country);
                     $res_message = ['country has been created sucessfully'];
